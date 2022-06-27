@@ -19,13 +19,15 @@ export interface StoreModule {
 }
 
 export interface ModuleOptions {
-  destroyURL: CallbackFn
+  destroyURL: CallbackFn,
+  fetchListURL: string
 }
 
 export interface ActionsFnParams {
-  isPinia: boolean
-  resource: keyof NamespacedState
-  options: ModuleOptions
   apiService: ApiService,
   idKey: string
+  isPinia: boolean
+  options: ModuleOptions
+  perPage?: number
+  resource: keyof NamespacedState
 }
