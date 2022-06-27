@@ -1,16 +1,11 @@
-import { NamespacedState, State } from '../types'
+import { SetStateParams, NamespacedState, StateParams, StateParamsByKey, State } from '../types'
 
-interface StateParams {
-  resource: keyof NamespacedState
-  key: keyof State & keyof NamespacedState
-}
-
-interface SetStateParams extends StateParams {
-  value: any
-}
-
-export function setState (this: NamespacedState, isPinia: boolean, params: SetStateParams): void {
-  const { key, value, resource } = params
+/**
+ * @example setStateByKey.call(this, { isPinia: true, key: 'list', value: [] })
+ * @example setStateByKey.call(this, { isPinia: false, key: 'list', value: [], resource: 'users' })
+ */
+export function setStateByKey (this: NamespacedState, params: SetStateParams): void {
+  const { isPinia, key, value, resource } = params
 
   if (isPinia) {
     this[key] = value
@@ -23,8 +18,22 @@ export function setState (this: NamespacedState, isPinia: boolean, params: SetSt
   }
 }
 
-export function getState (this: NamespacedState, isPinia: boolean, params: StateParams) {
-  const { key, resource } = params
+/**
+ * @example setStateByKey.call(this, { isPinia: true, key: 'list' })
+ * @example setStateByKey.call(this, { isPinia: false, key: 'list', resource: 'users' })
+ */
+export function getStateByKey (this: NamespacedState, params: StateParamsByKey) {
+  const { isPinia, key, resource } = params
 
   return isPinia ? this[key] : this.state?.[resource][key]
+}
+
+/**
+ * @example setState.call(this, { isPinia: true })
+ * @example setStateByKey.call(this, { isPinia: false, resource: 'users' })
+ */
+export function getState (this: NamespacedState, params: StateParams): State {
+  const { isPinia, resource } = params
+
+  return isPinia ? this as State : this.state?.[resource] as State
 }

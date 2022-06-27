@@ -1,4 +1,4 @@
-import { ApiService, Getters, State } from "./index"
+import { ApiService, Getters, State, NamespacedState } from "./index"
 
 type CallbackFn = (...url: unknown[]) => string
 
@@ -20,4 +20,12 @@ export interface StoreModule {
 
 export interface ModuleOptions {
   destroyURL: CallbackFn
+}
+
+export interface ActionsFnParams {
+  isPinia: boolean
+  resource: keyof NamespacedState
+  options: ModuleOptions
+  apiService: ApiService,
+  idKey: string
 }
