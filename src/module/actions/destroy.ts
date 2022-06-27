@@ -1,11 +1,11 @@
-import { Destroy, ModuleOptions, State } from '../../types'
+import { Destroy, ModuleOptions, NamespacedState } from '../../types'
 import { run } from '../../utils'
 
-// interface Pinia extends State
-
 export default (isPinia: boolean, resource: string, options: ModuleOptions) => {
-  return function (this: State, payload: Destroy) {
+  return function (this: NamespacedState, payload: Destroy) {
     const { id, params, url } = payload
+
+    // console.log(this.state)
 
     const normalizedURL = (
       run(url || options.destroyURL, { id }) ||
