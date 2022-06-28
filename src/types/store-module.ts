@@ -1,8 +1,22 @@
-import { ApiService, Getters, State, NamespacedState } from "./index"
+import {
+  ApiService,
+  Getters,
+  State
+} from "./index"
 
-type CallbackFn = (...url: unknown[]) => string
+import { ActionContext } from 'vuex'
+
+export type ActionsFnHandlerTuple<T> = [ActionContext<State, any> | T, T]
+
+export type CallbackFn = (...url: unknown[]) => string
+
+
+export interface StoreModuleAdapter {
+  name: 'pinia' | 'vuex'
+}
 
 export interface StoreModuleOptions {
+  adapter: StoreModuleAdapter
   apiService: ApiService
   getters: Getters
   idKey: string
@@ -17,17 +31,6 @@ export interface StoreModule {
   // TODO Alterar para um type actions
   actions: object
 }
-
-export interface ModuleOptions {
-  destroyURL: CallbackFn,
-  fetchListURL: string
-}
-
-export interface ActionsFnParams {
-  apiService: ApiService,
-  idKey: string
-  isPinia: boolean
-  options: ModuleOptions
-  perPage?: number
-  resource: keyof NamespacedState
+export interface Item {
+  [key: string]: any
 }

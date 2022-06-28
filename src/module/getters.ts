@@ -1,8 +1,4 @@
-import { Getters } from '../types'
-
-type Item = {
-  [key: string]: any
-}
+import { Getters, Item } from '../types'
 
 export default (idKey: keyof Item): Getters => {
   return {

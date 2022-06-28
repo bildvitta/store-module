@@ -2,36 +2,28 @@ import {
   ActionsFnParams,
   NamespacedState,
   ActionsFnHandlerTuple,
-  FetchFiltersActionPayload
+  FetchFieldOptionsActionPayload
 } from '../../types'
 
 import { AxiosResponse } from 'axios'
 
-import { getState, getActionPayload } from '../../utils'
+import { getActionPayload } from '../../utils'
 
 export default (configParams: ActionsFnParams) => {
   return async function (
     this: NamespacedState,
-    ...args: ActionsFnHandlerTuple<FetchFiltersActionPayload>
+    ...args: ActionsFnHandlerTuple<FetchFieldOptionsActionPayload>
   ): Promise<AxiosResponse> {
     const { apiService, isPinia, options, resource } = configParams
 
-    const payload = getActionPayload(isPinia, ...args) as FetchFiltersActionPayload
+    const payload = getActionPayload(isPinia, ...args) as FetchFieldOptionsActionPayload
 
-    const { params, url } = payload || {}
+    const { params, url, field } = payload || {}
 
-    const normalizedURL = url || options.fetchFiltersURL || `/${resource}/filters/`
+    const normalizedURL = url || options.fetchFieldOptionsURL || `/${resource}/options/${field}`
 
     try {
       const response = await apiService.get(normalizedURL, { params })
-      const { fields } = response.data
-
-      const state = getState.call(this, {
-        isPinia,
-        resource
-      })
-
-      state.filters = fields
 
       return response
     } catch (error) {

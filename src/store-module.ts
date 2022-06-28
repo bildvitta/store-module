@@ -1,12 +1,13 @@
 import {
   // ApiService,
-  // Getters,
-  // State,
+  ActionsFnParams,
   ApiService,
+  Getters,
   ModuleOptions,
+  NamespacedState,
+  State,
   StoreModule,
   StoreModuleOptions,
-  NamespacedState
 } from "./types"
 
 import { state, getters, destroy, fetchList } from './module'
@@ -14,42 +15,49 @@ import { state, getters, destroy, fetchList } from './module'
 export default class {
   // private adapter: 
   private apiService: ApiService
-  // private getters: Getters
-  // private idKey: string
+  private getters: Getters
+  private idKey: string = 'uuid'
+  private isPinia: boolean
   // private perPage: number
-  // private state: State
+  private state: State
 
   constructor (private options: StoreModuleOptions) {
     this.apiService = options.apiService
-    // this.getters = _options.getters
-    // this.idKey = _options.idKey
+    this.getters = options.getters
+    this.idKey = options.idKey
+    this.isPinia = (options.adapter?.name || 'pinia') === 'pinia'
     // this.perPage = _options.perPage
-    // this.state = _options.state
+    this.state = options.state
 
     console.log(this.options)
   }
 
   public getStoreModule (resource: keyof NamespacedState, options: ModuleOptions): StoreModule {
+    const actionsPayload: ActionsFnParams = {
+      apiService: this.apiService,
+      idKey: this.idKey,
+      isPinia: this.isPinia,
+      options,
+      resource
+    }
+
+    const idKey = options.idKey || this.idKey
+
+    // const test = await destroy(actionsPayload)
+
     return {
       namespaced: true,
-      state: state(),
-      getters: getters('uuid'),
+      state: {
+        ...state(),
+        ...this.state
+      },
+      getters: {
+        ...getters(idKey),
+        ...this.getters
+      },
       actions: {
-        destroy: destroy({
-          apiService: this.apiService,
-          idKey: 'uuid', // TODO ALTERAR
-          isPinia: false,
-          options,
-          resource
-        }),
-        fetchList: fetchList({
-          apiService: this.apiService,
-          idKey: 'uuid', // TODO ALTERAR
-          isPinia: false,
-          options,
-          perPage: 12,
-          resource
-        })
+        destroy: destroy(actionsPayload),
+        fetchList: fetchList(actionsPayload)
       }
     }
   }

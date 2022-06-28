@@ -2,7 +2,7 @@ type Item = {
   [key: string]: any
 }
 
-export interface FetchListAction {
+export interface FetchListActionPayload {
   filters: Item
   increment: boolean
   limit: number

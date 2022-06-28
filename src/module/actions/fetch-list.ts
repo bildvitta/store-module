@@ -1,21 +1,22 @@
-import { FetchListAction, ActionsFnParams, NamespacedState, State } from '../../types'
-import { getState } from '../../utils'
-import { ActionContext } from 'vuex'
+import {
+  ActionsFnParams,
+  NamespacedState,
+  ActionsFnHandlerTuple,
+  FetchListActionPayload
+} from '../../types'
 
-type Tuple = [ActionContext<State, any>, FetchListAction]
+import { AxiosResponse } from 'axios'
+
+import { getState, getActionPayload } from '../../utils'
 
 export default (configParams: ActionsFnParams) => {
-  return async function (this: NamespacedState, ...args: Tuple) {
-    /**
-     * quando estamos trabalhando com o "vuex", o primeiro parâmetro sempre vai ser o "ActionContext",
-     * porém quando trabalhamos com o "pinia", o primeiro parâmetro já é parâmetro real da action,
-     * desta forma, sempre pegamos o args[1] como sendo nosso parâmetro real, e ignoramos no caso do vuex o ActionContext
-     *
-     * @link ActionContext: https://github.com/vuejs/vuex/blob/01f87f0c3d59d0796a2535719dfa8328d1af390d/types/index.d.ts#L62-L69
-     */
-    const payload = args[1]
-
+  return async function (
+    this: NamespacedState,
+    ...args: ActionsFnHandlerTuple<FetchListActionPayload>
+  ): Promise<AxiosResponse> {
     const { apiService, isPinia, options, resource, perPage } = configParams
+
+    const payload = getActionPayload(isPinia, ...args) as FetchListActionPayload
 
     const { filters, increment, limit, ordering, page, search, url } = payload || {}
 

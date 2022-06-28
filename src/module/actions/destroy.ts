@@ -1,14 +1,19 @@
-import { DestroyAction, ActionsFnParams, NamespacedState } from '../../types'
-import { run, getState } from '../../utils'
+import {
+  ActionsFnHandlerTuple,
+  ActionsFnParams,
+  DestroyActionPayload,
+  NamespacedState,
+  Item
+} from '../../types'
 
-type Item = {
-  [key: string]: any
-}
+import { run, getState, getActionPayload } from '../../utils'
 
 export default (destroyConfig: ActionsFnParams) => {
-  return async function (this: NamespacedState, payload: DestroyAction) {
-
+  return async function (this: NamespacedState, ...args: ActionsFnHandlerTuple<DestroyActionPayload>) {
     const { apiService, isPinia, options, resource, idKey } = destroyConfig
+
+    const payload = getActionPayload(isPinia, ...args) as DestroyActionPayload
+
     const { id, params, url } = payload
 
     const normalizedURL = (
