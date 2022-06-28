@@ -4,7 +4,8 @@ import {
   FetchFiltersActionPayload,
   FetchSingleActionPayload,
   DestroyActionPayload,
-  FetchFieldOptionsActionPayload
+  FetchFieldOptionsActionPayload,
+  UpdateActionPayload
 } from '../types'
 
 type PayloadActionType =
@@ -12,7 +13,8 @@ type PayloadActionType =
   DestroyActionPayload |
   FetchFiltersActionPayload |
   FetchSingleActionPayload |
-  FetchFieldOptionsActionPayload
+  FetchFieldOptionsActionPayload |
+  UpdateActionPayload
 
 /**
  * quando estamos trabalhando com o "vuex", o primeiro parâmetro sempre vai ser o "ActionContext",
@@ -24,5 +26,5 @@ type PayloadActionType =
 export default (isPinia: boolean, ...args: ActionsFnHandlerTuple<PayloadActionType>): PayloadActionType => {
   const argIndex: number = isPinia ? 0 : 1
 
-  return args[argIndex] as PayloadActionType
+  return (args[argIndex] || {}) as PayloadActionType
 }

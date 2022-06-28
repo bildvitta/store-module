@@ -10,10 +10,11 @@ export interface ActionsFnParams {
 }
 
 export interface ModuleOptions {
-  idKey: string,
-  fetchListURL: string
-  fetchFiltersURL: string
   destroyURL: CallbackFn
-  fetchSingleURL: CallbackFn
   fetchFieldOptionsURL: string
+  fetchFiltersURL: string
+  fetchListURL: string
+  fetchSingleURL: CallbackFn
+  idKey: string,
+  updateURL: CallbackFn
 }

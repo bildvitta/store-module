@@ -10,7 +10,17 @@ import {
   StoreModuleOptions,
 } from "./types"
 
-import { state, getters, destroy, fetchList } from './module'
+import {
+  state,
+  getters,
+  // actions
+  destroy,
+  fetchList,
+  fetchFilters,
+  fetchSingle,
+  fetchFieldOptions,
+  update
+} from './module'
 
 export default class {
   // private adapter: 
@@ -43,8 +53,6 @@ export default class {
 
     const idKey = options.idKey || this.idKey
 
-    // const test = await destroy(actionsPayload)
-
     return {
       namespaced: true,
       state: {
@@ -57,7 +65,11 @@ export default class {
       },
       actions: {
         destroy: destroy(actionsPayload),
-        fetchList: fetchList(actionsPayload)
+        fetchFieldOptions: fetchFieldOptions(actionsPayload),
+        fetchFilters: fetchFilters(actionsPayload),
+        fetchList: fetchList(actionsPayload),
+        fetchSingle: fetchSingle(actionsPayload),
+        update: update(actionsPayload)
       }
     }
   }

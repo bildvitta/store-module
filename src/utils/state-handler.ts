@@ -35,5 +35,5 @@ export function getStateByKey (this: NamespacedState, params: StateParamsByKey) 
 export function getState (this: NamespacedState, params: StateParams): State {
   const { isPinia, resource } = params
 
-  return isPinia ? this as State : this.state?.[resource] as State
+  return (isPinia ? this : this.state?.[resource]) as State
 }
