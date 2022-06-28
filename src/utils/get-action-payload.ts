@@ -5,7 +5,8 @@ import {
   FetchSingleActionPayload,
   DestroyActionPayload,
   FetchFieldOptionsActionPayload,
-  UpdateActionPayload
+  UpdateActionPayload,
+  ReplaceActionPayload
 } from '../types'
 
 type PayloadActionType =
@@ -14,7 +15,8 @@ type PayloadActionType =
   FetchFiltersActionPayload |
   FetchSingleActionPayload |
   FetchFieldOptionsActionPayload |
-  UpdateActionPayload
+  UpdateActionPayload |
+  ReplaceActionPayload
 
 /**
  * quando estamos trabalhando com o "vuex", o primeiro parâmetro sempre vai ser o "ActionContext",

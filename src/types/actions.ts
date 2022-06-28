@@ -17,4 +17,5 @@ export interface ModuleOptions {
   fetchSingleURL: CallbackFn
   idKey: string,
   updateURL: CallbackFn
+  replaceURL: CallbackFn
 }

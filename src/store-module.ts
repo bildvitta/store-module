@@ -19,7 +19,8 @@ import {
   fetchFilters,
   fetchSingle,
   fetchFieldOptions,
-  update
+  update,
+  replace
 } from './module'
 
 export default class {
@@ -69,12 +70,9 @@ export default class {
         fetchFilters: fetchFilters(actionsPayload),
         fetchList: fetchList(actionsPayload),
         fetchSingle: fetchSingle(actionsPayload),
-        update: update(actionsPayload)
+        update: update(actionsPayload),
+        replace: replace(actionsPayload)
       }
     }
   }
-
-  // get options (): StoreModuleOptions {
-  //   return this.options
-  // }
 }
