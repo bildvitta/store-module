@@ -1,6 +1,4 @@
-type Item = {
-  [key: string]: any
-}
+import { Item } from '../index'
 
 export interface FetchListActionPayload {
   filters: Item

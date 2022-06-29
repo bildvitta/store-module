@@ -10,9 +10,17 @@ export type ActionsFnHandlerTuple<T> = [ActionContext<State, any> | T, T]
 
 export type CallbackFn = (...url: unknown[]) => string
 
+export type PiniaStoreDefinition = (id: string, options: StoreModule) => void
+
+export interface PiniaAdapter {
+  // TODO alterar any para actions
+  defineStore: PiniaStoreDefinition
+}
+
 
 export interface StoreModuleAdapter {
-  name: 'pinia' | 'vuex'
+  name: 'pinia' | 'vuex',
+  pinia: PiniaAdapter
 }
 
 export interface StoreModuleOptions {
@@ -25,6 +33,7 @@ export interface StoreModuleOptions {
 }
 
 export interface StoreModule {
+  storeName?: string
   namespaced: boolean
   state: State
   getters: Getters

@@ -1,4 +1,17 @@
-import { ApiService, CallbackFn, NamespacedState } from './index'
+import {
+  ApiService,
+  CallbackFn,
+  NamespacedState,
+  //
+  FetchListActionPayload,
+  FetchFiltersActionPayload,
+  FetchSingleActionPayload,
+  DestroyActionPayload,
+  FetchFieldOptionsActionPayload,
+  UpdateActionPayload,
+  ReplaceActionPayload,
+  CreateActionPayload
+} from './index'
 
 export interface ActionsFnParams {
   apiService: ApiService,
@@ -18,4 +31,15 @@ export interface ModuleOptions {
   idKey: string,
   updateURL: CallbackFn
   replaceURL: CallbackFn
+  createURL: string
 }
+
+export type PayloadActionType =
+  FetchListActionPayload |
+  DestroyActionPayload |
+  FetchFiltersActionPayload |
+  FetchSingleActionPayload |
+  FetchFieldOptionsActionPayload |
+  UpdateActionPayload |
+  ReplaceActionPayload |
+  CreateActionPayload

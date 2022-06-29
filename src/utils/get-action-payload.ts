@@ -1,22 +1,4 @@
-import {
-  ActionsFnHandlerTuple,
-  FetchListActionPayload,
-  FetchFiltersActionPayload,
-  FetchSingleActionPayload,
-  DestroyActionPayload,
-  FetchFieldOptionsActionPayload,
-  UpdateActionPayload,
-  ReplaceActionPayload
-} from '../types'
-
-type PayloadActionType =
-  FetchListActionPayload |
-  DestroyActionPayload |
-  FetchFiltersActionPayload |
-  FetchSingleActionPayload |
-  FetchFieldOptionsActionPayload |
-  UpdateActionPayload |
-  ReplaceActionPayload
+import { ActionsFnHandlerTuple, PayloadActionType } from '../types'
 
 /**
  * quando estamos trabalhando com o "vuex", o primeiro parâmetro sempre vai ser o "ActionContext",
