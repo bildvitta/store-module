@@ -24,7 +24,6 @@ import {
   replace,
   create
 } from './module'
-
 export default class {
   private adapter: StoreModuleAdapter
   private apiService: ApiService
@@ -33,15 +32,22 @@ export default class {
   private isPinia: boolean
   // private perPage: number
   private state: State
+  private modules: Record<string, StoreModule> = {}
 
   constructor (private options: StoreModuleOptions) {
     this.adapter = options.adapter
     this.apiService = options.apiService
     this.getters = options.getters
     this.idKey = options.idKey
-    this.isPinia = (options.adapter?.name || 'pinia') === 'pinia'
+    this.isPinia = (this.adapter?.name || 'pinia') === 'pinia'
     // this.perPage = _options.perPage
     this.state = options.state
+
+    console.log(this.options, 'quantas vezes essa classe foi instanciada??? kkkk')
+  }
+
+  public getModules (): Record<string, StoreModule> {
+    return this.modules
   }
 
   public getStoreModule (resource: keyof NamespacedState, options: ModuleOptions): StoreModule {
@@ -53,7 +59,34 @@ export default class {
       resource
     }
 
+    console.log('fui chamado no get')
+
     const idKey = options.idKey || this.idKey
+
+    this.modules[resource] = {
+      namespaced: true,
+
+      state: {
+        ...state(),
+        ...this.state
+      },
+
+      getters: {
+        ...getters(idKey),
+        ...this.getters
+      },
+
+      actions: {
+        destroy: destroy(actionsPayload),
+        fetchFieldOptions: fetchFieldOptions(actionsPayload),
+        fetchFilters: fetchFilters(actionsPayload),
+        fetchList: fetchList(actionsPayload),
+        fetchSingle: fetchSingle(actionsPayload),
+        update: update(actionsPayload),
+        replace: replace(actionsPayload),
+        create: create(actionsPayload)
+      }
+    }
 
     return {
       namespaced: true,
@@ -81,17 +114,49 @@ export default class {
     }
   }
 
-  public definePiniaStores (stores: Record<string, StoreModule>) {
-    if (!this.isPinia) {
-      throw new Error('Wrong adapter, "definePiniaStore" only works with pinia adapter.')
+  public getGlocalStoreVariable () {
+    const myObject: GlobalStoreVariable = {
+      state: {},
+      getters: {},
+      dispatch: () => {},
+      _actions: {}
     }
 
-    if (!this.adapter?.pinia?.defineStore) {
-      throw new Error('Please, provide method "defineStore" from pinia.')
+    for (const key in this.modules) {
+      const module = this.modules[key]
+      
+      for (const stateKey in module.state) {
+        const typedKey = stateKey as keyof State
+        const state = module.state[typedKey]
+
+        myObject.state[`${key}/${typedKey}`] = state
+      }
     }
 
-    for (const key in stores) {
-      this.adapter.pinia.defineStore(key, stores[key])
-    }
+    console.log(myObject, 'getGlocalStoreVariable')
   }
+
+  // private getGlocalStoreVariableTest () {
+
+  // }
+}
+
+type GlobalStoreVariableState<T extends string> = {
+  [key in `${T}/list`]: State['list']
+}
+
+const users = 'users'
+
+const test: GlobalStoreVariableState<typeof users> = {
+  // "users/list": [{}]
+}
+
+const test2: GlobalStoreVariableState = {
+  
+  // 'state/filters': ''
+}
+
+interface GlobalStoreVariable {
+  state: State
+  [key: string]: any
 }
