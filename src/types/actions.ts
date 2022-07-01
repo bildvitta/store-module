@@ -93,6 +93,11 @@ export interface Actions {
 
 export type ReplaceUpdateApiResponse = Pick<ApiResponse, 'fields' | 'result' | 'status'>
 
+export interface ApiResponseStatus {
+  code: 200 | 401 | 403 | 404 | 500
+  text: string
+}
+
 export interface ApiResponse {
   count?: number
   errors?: ItemOfItem
@@ -100,5 +105,5 @@ export interface ApiResponse {
   metadata?: ItemOfItem
   results?: Item[]
   result?: Item
-  status: Record<'code', 200 | 401 | 403 | 404 | 500>
+  status: ApiResponseStatus
 }
