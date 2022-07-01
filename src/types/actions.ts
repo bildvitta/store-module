@@ -95,7 +95,7 @@ export type ReplaceUpdateApiResponse = Pick<ApiResponse, 'fields' | 'result' | '
 
 export interface ApiResponseStatus {
   code: 200 | 401 | 403 | 404 | 500
-  text: string
+  text?: string
 }
 
 export interface ApiResponse {
