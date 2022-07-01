@@ -8,8 +8,11 @@ import {
   State,
   StoreModule,
   StoreModuleOptions,
-  StoreModuleAdapter
-} from "./types"
+  StoreModuleAdapter,
+  ActionsPayload
+} from './types'
+
+import { AxiosResponse } from 'axios'
 
 import {
   state,
@@ -24,6 +27,7 @@ import {
   replace,
   create
 } from './module'
+
 export default class {
   private adapter: StoreModuleAdapter
   private apiService: ApiService
@@ -33,6 +37,13 @@ export default class {
   // private perPage: number
   private state: State
   private modules: Record<string, StoreModule> = {}
+
+  private globalStoreVariable: GlobalStoreVariable = {
+    state: {},
+    getters: {},
+    dispatch: this.dispatch,
+    _actions: {}
+  }
 
   constructor (private options: StoreModuleOptions) {
     this.adapter = options.adapter
@@ -59,11 +70,11 @@ export default class {
       resource
     }
 
-    console.log('fui chamado no get')
-
     const idKey = options.idKey || this.idKey
 
-    this.modules[resource] = {
+    // const actionFetchFilters = 
+
+    const store: StoreModule = {
       namespaced: true,
 
       state: {
@@ -77,86 +88,80 @@ export default class {
       },
 
       actions: {
-        destroy: destroy(actionsPayload),
+        // destroy: destroy(actionsPayload),
         fetchFieldOptions: fetchFieldOptions(actionsPayload),
-        fetchFilters: fetchFilters(actionsPayload),
-        fetchList: fetchList(actionsPayload),
-        fetchSingle: fetchSingle(actionsPayload),
+        // fetchFilters: fetchFilters(actionsPayload),
+        // fetchList: fetchList(actionsPayload),
+        // fetchSingle: fetchSingle(actionsPayload),
         update: update(actionsPayload),
         replace: replace(actionsPayload),
         create: create(actionsPayload)
       }
     }
 
-    return {
-      namespaced: true,
+    this.modules[resource] = store
 
-      state: {
-        ...state(),
-        ...this.state
-      },
-
-      getters: {
-        ...getters(idKey),
-        ...this.getters
-      },
-
-      actions: {
-        destroy: destroy(actionsPayload),
-        fetchFieldOptions: fetchFieldOptions(actionsPayload),
-        fetchFilters: fetchFilters(actionsPayload),
-        fetchList: fetchList(actionsPayload),
-        fetchSingle: fetchSingle(actionsPayload),
-        update: update(actionsPayload),
-        replace: replace(actionsPayload),
-        create: create(actionsPayload)
-      }
-    }
+    return store
   }
 
   public getGlocalStoreVariable () {
-    const myObject: GlobalStoreVariable = {
-      state: {},
-      getters: {},
-      dispatch: () => {},
-      _actions: {}
-    }
-
     for (const key in this.modules) {
       const module = this.modules[key]
-      
-      for (const stateKey in module.state) {
-        const typedKey = stateKey as keyof State
-        const state = module.state[typedKey]
 
-        myObject.state[`${key}/${typedKey}`] = state
-      }
+      Object.assign(
+        this.globalStoreVariable.state,
+        this.getNormalizedNamespacedStore({ key, payload: module.state })
+      )
+
+      Object.assign(
+        this.globalStoreVariable.getters,
+        this.getNormalizedNamespacedStore({ key, payload: module.getters })
+      )
+
+      Object.assign(
+        this.globalStoreVariable._action,
+        this.getNormalizedNamespacedStore({ key, payload: module.actions })
+      )
     }
-
-    console.log(myObject, 'getGlocalStoreVariable')
   }
 
-  // private getGlocalStoreVariableTest () {
+  private getNormalizedNamespacedStore (params: GetNormalizedNamespaced) {
+    const { key, payload } = params
 
-  // }
+    const object: Record<string, unknown> = {}
+
+    for (const stateKey in payload) {
+      const typedKey = stateKey
+      const state = payload[typedKey]
+
+      object[`${key}/${typedKey}`] = state
+    }
+
+    return object
+  }
+
+  private dispatch (resource: string, payload: ActionsPayload) {
+    this.globalStoreVariable._actions[resource](payload)
+  }
 }
 
-type GlobalStoreVariableState<T extends string> = {
-  [key in `${T}/list`]: State['list']
+interface GetNormalizedNamespaced {
+  key: string
+  payload: State | Getters | any
 }
 
-const users = 'users'
+type GlobalStoreVariableState = (
+  Record<`${string}/${keyof State}`, State['list'] | State['totalPages'] | State['filters']>
+)
 
-const test: GlobalStoreVariableState<typeof users> = {
-  // "users/list": [{}]
-}
-
-const test2: GlobalStoreVariableState = {
-  
-  // 'state/filters': ''
-}
-
+type GlobalStoreVariableGetters = (
+  Record<
+    `${string}/${keyof Getters}`,
+    Getters['list'] | Getters['totalPages'] | Getters['filters'] | Getters['byId']
+  >
+)
 interface GlobalStoreVariable {
-  state: State
+  state: GlobalStoreVariableState
+  getters: GlobalStoreVariableGetters
   [key: string]: any
 }

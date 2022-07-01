@@ -1,7 +1,8 @@
 import {
   ApiService,
   Getters,
-  State
+  State,
+  Actions
 } from "./index"
 
 import { ActionContext } from 'vuex'
@@ -33,13 +34,18 @@ export interface StoreModuleOptions {
 }
 
 export interface StoreModule {
-  storeName?: string
   namespaced: boolean
   state: State
   getters: Getters
   // TODO Alterar para um type actions
-  actions: object
+  actions: Actions
+  // actions: Record<ActionsTypes, any>
 }
+
 export interface Item {
   [key: string]: any
+}
+
+export interface ItemOfItem {
+  [key: string]: Item
 }
