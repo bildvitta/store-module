@@ -5,11 +5,18 @@ import {
   ItemOfItem,
   Item,
   ActionsFnHandlerTuple,
+
+  // API RESPONSE
   FetchFieldOptionsApiResponse,
   UpdateApiResponse,
   ReplaceApiResponse,
   CreateApiResponse,
-  //
+  DestroyApiResponse,
+  FetchFiltersApiResponse,
+  FetchListApiResponse,
+  FetchSingleApiResponse,
+
+  // ACTIONS PAYLOAD
   FetchListActionPayload,
   FetchFiltersActionPayload,
   FetchSingleActionPayload,
@@ -18,7 +25,7 @@ import {
   UpdateActionPayload,
   ReplaceActionPayload,
   CreateActionPayload
-} from './index'
+} from 'types'
 
 import { AxiosResponse } from 'axios'
 
@@ -65,27 +72,16 @@ export type PayloadActionType = (
   CreateActionPayload
 )
 
-export type ActionsTypes = (
-  'destroy' &
-  'fetchFieldOptions' &
-  'fetchFilters' &
-  'fetchList' &
-  'fetchSingle' &
-  'update' &
-  'replace' &
-  'create'
-)
-
-// export type FetchFieldOptionsActionCallback = (
-//   ...args: ActionsFnHandlerTuple<FetchFieldOptionsActionPayload>
-// ) => Promise<AxiosResponse<FetchFieldOptionsApiResponse>>
-
 export type ActionCallback<T, A> = (
   ...args: ActionsFnHandlerTuple<T>
 ) => Promise<AxiosResponse<A>>
 
 export interface Actions {
+  destroy: ActionCallback<DestroyActionPayload, DestroyApiResponse>
   fetchFieldOptions: ActionCallback<FetchFieldOptionsActionPayload, FetchFieldOptionsApiResponse>
+  fetchFilters: ActionCallback<FetchFiltersActionPayload, FetchFiltersApiResponse>
+  fetchList: ActionCallback<FetchListActionPayload, FetchListApiResponse>
+  fetchSingle: ActionCallback<FetchSingleActionPayload, FetchSingleApiResponse>
   update: ActionCallback<UpdateActionPayload, UpdateApiResponse>
   replace: ActionCallback<ReplaceActionPayload, ReplaceApiResponse>
   create: ActionCallback<CreateActionPayload, CreateApiResponse>

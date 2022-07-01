@@ -6,20 +6,20 @@ import {
   Item
 } from '../../types'
 
+import { AxiosResponse } from 'axios'
+
 import { run, getState, getActionPayload } from '../../utils'
 
 export default (destroyConfig: ActionsFnParams) => {
-  return async function (this: NamespacedState, ...args: ActionsFnHandlerTuple<DestroyActionPayload>) {
+  return async function (
+    this: NamespacedState,
+    ...args: ActionsFnHandlerTuple<DestroyActionPayload>
+  ): Promise<AxiosResponse> {
     const { apiService, isPinia, options, resource, idKey } = destroyConfig
+    const { id, params, url } = getActionPayload(isPinia, ...args) as DestroyActionPayload
 
-    const payload = getActionPayload(isPinia, ...args) as DestroyActionPayload
-
-    const { id, params, url } = payload
-
-    const normalizedURL = (
-      run(url || options.destroyURL, { id }) ||
-      `/${resource}/${id}/`
-    )
+    const customURL = run(url || options.destroyURL, { id })
+    const normalizedURL = customURL || `/${resource}/${id}/`
 
     try {
       const response = await apiService.delete(normalizedURL, { params })

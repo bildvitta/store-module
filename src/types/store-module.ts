@@ -37,9 +37,7 @@ export interface StoreModule {
   namespaced: boolean
   state: State
   getters: Getters
-  // TODO Alterar para um type actions
   actions: Actions
-  // actions: Record<ActionsTypes, any>
 }
 
 export interface Item {

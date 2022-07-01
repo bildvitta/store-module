@@ -1,6 +1,5 @@
 import {
   ActionsFnParams,
-  NamespacedState,
   ActionsFnHandlerTuple,
   FetchFieldOptionsActionPayload,
   FetchFieldOptionsApiResponse
@@ -10,7 +9,9 @@ import { AxiosResponse } from 'axios'
 import { getActionPayload } from '../../utils'
 
 export default function test (configParams: ActionsFnParams) {
-  return function (...args: ActionsFnHandlerTuple<FetchFieldOptionsActionPayload>): Promise<AxiosResponse<FetchFieldOptionsApiResponse>> {
+  return function (
+    ...args: ActionsFnHandlerTuple<FetchFieldOptionsActionPayload>
+  ): Promise<AxiosResponse<FetchFieldOptionsApiResponse>> {
     const { apiService, isPinia, options, resource } = configParams
 
     const payload = getActionPayload(isPinia, ...args) as FetchFieldOptionsActionPayload

@@ -19,7 +19,10 @@
     "emitDecoratorMetadata": true,
     "declaration": true,
     "declarationDir": "./src/types",
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "paths": {
+      "types": ["./src/types"]
+    }
   },
   "include": ["src"]
 }

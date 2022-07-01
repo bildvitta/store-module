@@ -10,9 +10,7 @@ import {
   StoreModuleOptions,
   StoreModuleAdapter,
   ActionsPayload
-} from './types'
-
-import { AxiosResponse } from 'axios'
+} from 'types'
 
 import {
   state,
@@ -88,11 +86,11 @@ export default class {
       },
 
       actions: {
-        // destroy: destroy(actionsPayload),
+        destroy: destroy(actionsPayload),
         fetchFieldOptions: fetchFieldOptions(actionsPayload),
-        // fetchFilters: fetchFilters(actionsPayload),
-        // fetchList: fetchList(actionsPayload),
-        // fetchSingle: fetchSingle(actionsPayload),
+        fetchFilters: fetchFilters(actionsPayload),
+        fetchList: fetchList(actionsPayload),
+        fetchSingle: fetchSingle(actionsPayload),
         update: update(actionsPayload),
         replace: replace(actionsPayload),
         create: create(actionsPayload)

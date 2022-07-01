@@ -1,4 +1,4 @@
-import { Item } from '../index'
+import { Item, ApiResponse } from 'types'
 
 export interface FetchListActionPayload {
   filters: Item
@@ -9,3 +9,5 @@ export interface FetchListActionPayload {
   search: string
   url: string
 }
+
+export type FetchListApiResponse = Omit<ApiResponse, 'result'>
