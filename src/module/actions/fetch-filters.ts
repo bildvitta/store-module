@@ -15,11 +15,17 @@ export default (configParams: ActionsFnParams) => {
     this: NamespacedState,
     ...args: ActionsFnHandlerTuple<FetchFiltersActionPayload>
   ): Promise<AxiosResponse<FetchFiltersApiResponse>> {
-    const { apiService, isPinia, options, resource } = configParams
+    const {
+      apiService,
+      isPinia,
+      options,
+      resource
+    } = configParams
 
-    const payload = getActionPayload(isPinia, ...args) as FetchFiltersActionPayload
-
-    const { params, url } = payload || {}
+    const {
+      params,
+      url
+    } = getActionPayload(isPinia, ...args) as FetchFiltersActionPayload
 
     const normalizedURL = url || options.fetchFiltersURL || `/${resource}/filters/`
 
@@ -27,10 +33,7 @@ export default (configParams: ActionsFnParams) => {
       const response = await apiService.get(normalizedURL, { params })
       const { fields } = response.data
 
-      const state = getState.call(this, {
-        isPinia,
-        resource
-      })
+      const state = getState.call(this, { isPinia, resource })
 
       state.filters = fields
 

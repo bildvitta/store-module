@@ -17,9 +17,15 @@ export default (configParams: ActionsFnParams) => {
   ): Promise<AxiosResponse<FetchListApiResponse>> {
     const { apiService, isPinia, options, resource, perPage } = configParams
 
-    const payload = getActionPayload(isPinia, ...args) as FetchListActionPayload
-
-    const { filters, increment, limit, ordering, page, search, url } = payload || {}
+    const {
+      filters,
+      increment,
+      limit,
+      ordering,
+      page,
+      search,
+      url
+    } = getActionPayload(isPinia, ...args) as FetchListActionPayload
 
     const defaultPerPage = perPage || 12
 
@@ -37,10 +43,7 @@ export default (configParams: ActionsFnParams) => {
       const response = await apiService.get(normalizedURL, { params })
       const { results, count } = response.data
 
-      const state = getState.call(this, {
-        isPinia,
-        resource
-      })
+      const state = getState.call(this, { isPinia, resource })
 
       increment && page > 1
         ? state.list.push(...results)

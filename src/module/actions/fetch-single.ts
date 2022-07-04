@@ -16,11 +16,20 @@ export default (configParams: ActionsFnParams) => {
     this: NamespacedState,
     ...args: ActionsFnHandlerTuple<FetchSingleActionPayload>
   ): Promise<AxiosResponse<FetchSingleApiResponse>> {
-    const { apiService, isPinia, options, resource, idKey } = configParams
+    const {
+      apiService,
+      isPinia,
+      options,
+      resource,
+      idKey
+    } = configParams
 
-    const payload = getActionPayload(isPinia, ...args) as FetchSingleActionPayload
-
-    const { form, id, params, url } = payload || {}
+    const {
+      form,
+      id,
+      params,
+      url
+    } = getActionPayload(isPinia, ...args) as FetchSingleActionPayload
 
     const customURL = run(url || options.fetchSingleURL, { form, id })
     const automaticURL = form
@@ -33,10 +42,7 @@ export default (configParams: ActionsFnParams) => {
       const response = await apiService.get(normalizedURL, { params })
       const { result } = response.data
 
-      const state = getState.call(this, {
-        isPinia,
-        resource
-      })
+      const state = getState.call(this, { isPinia, resource })
 
       if (result) {
         const index = state.list.findIndex(

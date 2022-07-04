@@ -15,9 +15,17 @@ export default (configParams: ActionsFnParams) => {
     this: NamespacedState,
     ...args: ActionsFnHandlerTuple<CreateActionPayload>
   ): Promise<AxiosResponse<CreateApiResponse>> {
-    const { apiService, isPinia, options, resource } = configParams
+    const {
+      apiService,
+      isPinia,
+      options,
+      resource
+    } = configParams
 
-    const { payload, url } = getActionPayload(isPinia, ...args) as CreateActionPayload
+    const {
+      payload,
+      url
+    } = getActionPayload(isPinia, ...args) as CreateActionPayload
 
     const normalizedURL = url || options.createURL || `/${resource}/`
 

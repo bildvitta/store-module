@@ -16,9 +16,19 @@ export default (configParams: ActionsFnParams) => {
     this: NamespacedState,
     ...args: ActionsFnHandlerTuple<ReplaceActionPayload>
   ): Promise<AxiosResponse<ReplaceApiResponse>> {
-    const { apiService, isPinia, options, resource, idKey } = configParams
+    const {
+      apiService,
+      idKey,
+      isPinia,
+      options,
+      resource
+    } = configParams
 
-    const { id, payload, url } = getActionPayload(isPinia, ...args) as ReplaceActionPayload
+    const {
+      id,
+      payload,
+      url
+    } = getActionPayload(isPinia, ...args) as ReplaceActionPayload
 
     const customURL = run(url || options.replaceURL, { id })
     const normalizedURL = customURL || `/${resource}/${id}/`
@@ -27,10 +37,7 @@ export default (configParams: ActionsFnParams) => {
       const response = await apiService.put(normalizedURL, payload)
       const { result } = response.data
 
-      const state = getState.call(this, {
-        isPinia,
-        resource
-      })
+      const state = getState.call(this, { isPinia, resource })
 
       const index = state.list.findIndex(
         (item: Item) => item[idKey] === result[idKey]

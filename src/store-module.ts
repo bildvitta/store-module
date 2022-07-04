@@ -36,6 +36,7 @@ export default class {
   private getters: Getters
   private idKey: string = 'uuid'
   private isPinia: boolean
+  private isVuex: boolean
   // private perPage: number
   private state: State
   private modules: Record<string, StoreModule> = {}
@@ -53,6 +54,7 @@ export default class {
     this.getters = this.options.getters
     this.idKey = this.options.idKey
     this.isPinia = (this.adapter?.name || 'pinia') === 'pinia'
+    this.isVuex = !this.isPinia
     // this.perPage = _this.options.perPage
     this.state = this.options.state
   }
@@ -74,7 +76,7 @@ export default class {
 
     const store: StoreModule = {
       // namespaced existe somente no vuex
-      ...(!this.isPinia && { namespaced: true }),
+      ...(this.isVuex && { namespaced: true }),
 
       state: {
         ...state(),
