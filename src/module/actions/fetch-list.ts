@@ -2,8 +2,9 @@ import {
   ActionsFnParams,
   NamespacedState,
   ActionsFnHandlerTuple,
-  FetchListActionPayload
-} from '../../types'
+  FetchListActionPayload,
+  FetchListApiResponse
+} from 'types'
 
 import { AxiosResponse } from 'axios'
 
@@ -13,7 +14,7 @@ export default (configParams: ActionsFnParams) => {
   return async function (
     this: NamespacedState,
     ...args: ActionsFnHandlerTuple<FetchListActionPayload>
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse<FetchListApiResponse>> {
     const { apiService, isPinia, options, resource, perPage } = configParams
 
     const payload = getActionPayload(isPinia, ...args) as FetchListActionPayload

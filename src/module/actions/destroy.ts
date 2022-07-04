@@ -3,6 +3,7 @@ import {
   ActionsFnParams,
   DestroyActionPayload,
   NamespacedState,
+  DestroyApiResponse,
   Item
 } from '../../types'
 
@@ -14,7 +15,7 @@ export default (destroyConfig: ActionsFnParams) => {
   return async function (
     this: NamespacedState,
     ...args: ActionsFnHandlerTuple<DestroyActionPayload>
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse<DestroyApiResponse>> {
     const { apiService, isPinia, options, resource, idKey } = destroyConfig
     const { id, params, url } = getActionPayload(isPinia, ...args) as DestroyActionPayload
 

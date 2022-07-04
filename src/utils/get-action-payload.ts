@@ -1,4 +1,4 @@
-import { ActionsFnHandlerTuple, PayloadActionType } from '../types'
+import { ActionsFnHandlerTuple, PayloadActionType } from 'types'
 
 /**
  * quando estamos trabalhando com o "vuex", o primeiro parâmetro sempre vai ser o "ActionContext",

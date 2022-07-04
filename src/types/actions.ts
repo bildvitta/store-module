@@ -39,13 +39,13 @@ export interface ActionsFnParams {
 }
 
 export type ActionsPayload = (
-  FetchListActionPayload |
-  FetchFiltersActionPayload |
-  FetchSingleActionPayload |
-  DestroyActionPayload |
-  FetchFieldOptionsActionPayload |
-  UpdateActionPayload |
-  ReplaceActionPayload |
+  FetchListActionPayload &
+  FetchFiltersActionPayload &
+  FetchSingleActionPayload &
+  DestroyActionPayload &
+  FetchFieldOptionsActionPayload &
+  UpdateActionPayload &
+  ReplaceActionPayload &
   CreateActionPayload
 )
 
@@ -85,6 +85,17 @@ export interface Actions {
   update: ActionCallback<UpdateActionPayload, UpdateApiResponse>
   replace: ActionCallback<ReplaceActionPayload, ReplaceApiResponse>
   create: ActionCallback<CreateActionPayload, CreateApiResponse>
+}
+
+export interface Actions2 {
+  destroy: (payload: DestroyActionPayload) => Promise<AxiosResponse<DestroyApiResponse>>
+  fetchFieldOptions: (payload: FetchFieldOptionsActionPayload) => Promise<AxiosResponse<FetchFieldOptionsApiResponse>>
+  fetchFilters: (payload: FetchFiltersActionPayload) => Promise<AxiosResponse<FetchFiltersApiResponse>>
+  fetchList: (payload: FetchListActionPayload) => Promise<AxiosResponse<FetchListApiResponse>>
+  fetchSingle: (payload: FetchSingleActionPayload) => Promise<AxiosResponse<FetchSingleApiResponse>>
+  update: (payload: UpdateActionPayload) => Promise<AxiosResponse<UpdateApiResponse>>
+  replace: (payload: ReplaceActionPayload) => Promise<AxiosResponse<ReplaceApiResponse>>
+  create: (payload: CreateActionPayload) => Promise<AxiosResponse<CreateApiResponse>>
 }
 
 export type ReplaceUpdateApiResponse = Pick<ApiResponse, 'fields' | 'result' | 'status'>

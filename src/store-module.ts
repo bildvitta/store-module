@@ -9,8 +9,12 @@ import {
   StoreModule,
   StoreModuleOptions,
   StoreModuleAdapter,
-  ActionsPayload
+  Actions2,
+  GlobalStoreVariable,
+  GetNormalizedNamespaced
 } from 'types'
+
+import { dispatch } from './utils'
 
 import {
   state,
@@ -23,7 +27,7 @@ import {
   fetchFieldOptions,
   update,
   replace,
-  create
+  create,
 } from './module'
 
 export default class {
@@ -39,20 +43,18 @@ export default class {
   private globalStoreVariable: GlobalStoreVariable = {
     state: {},
     getters: {},
-    dispatch: this.dispatch,
+    dispatch,
     _actions: {}
   }
 
   constructor (private options: StoreModuleOptions) {
-    this.adapter = options.adapter
-    this.apiService = options.apiService
-    this.getters = options.getters
-    this.idKey = options.idKey
+    this.adapter = this.options.adapter
+    this.apiService = this.options.apiService
+    this.getters = this.options.getters
+    this.idKey = this.options.idKey
     this.isPinia = (this.adapter?.name || 'pinia') === 'pinia'
-    // this.perPage = _options.perPage
-    this.state = options.state
-
-    console.log(this.options, 'quantas vezes essa classe foi instanciada??? kkkk')
+    // this.perPage = _this.options.perPage
+    this.state = this.options.state
   }
 
   public getModules (): Record<string, StoreModule> {
@@ -70,10 +72,9 @@ export default class {
 
     const idKey = options.idKey || this.idKey
 
-    // const actionFetchFilters = 
-
     const store: StoreModule = {
-      namespaced: true,
+      // namespaced existe somente no vuex
+      ...(!this.isPinia && { namespaced: true }),
 
       state: {
         ...state(),
@@ -102,7 +103,7 @@ export default class {
     return store
   }
 
-  public getGlocalStoreVariable () {
+  public getGlocalStoreVariable (): GlobalStoreVariable {
     for (const key in this.modules) {
       const module = this.modules[key]
 
@@ -117,10 +118,12 @@ export default class {
       )
 
       Object.assign(
-        this.globalStoreVariable._action,
+        this.globalStoreVariable._actions,
         this.getNormalizedNamespacedStore({ key, payload: module.actions })
       )
     }
+
+    return this.globalStoreVariable
   }
 
   private getNormalizedNamespacedStore (params: GetNormalizedNamespaced) {
@@ -129,7 +132,7 @@ export default class {
     const object: Record<string, unknown> = {}
 
     for (const stateKey in payload) {
-      const typedKey = stateKey
+      const typedKey = stateKey as keyof (State | Getters | Actions2)
       const state = payload[typedKey]
 
       object[`${key}/${typedKey}`] = state
@@ -137,29 +140,4 @@ export default class {
 
     return object
   }
-
-  private dispatch (resource: string, payload: ActionsPayload) {
-    this.globalStoreVariable._actions[resource](payload)
-  }
-}
-
-interface GetNormalizedNamespaced {
-  key: string
-  payload: State | Getters | any
-}
-
-type GlobalStoreVariableState = (
-  Record<`${string}/${keyof State}`, State['list'] | State['totalPages'] | State['filters']>
-)
-
-type GlobalStoreVariableGetters = (
-  Record<
-    `${string}/${keyof Getters}`,
-    Getters['list'] | Getters['totalPages'] | Getters['filters'] | Getters['byId']
-  >
-)
-interface GlobalStoreVariable {
-  state: GlobalStoreVariableState
-  getters: GlobalStoreVariableGetters
-  [key: string]: any
 }

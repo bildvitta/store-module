@@ -2,7 +2,7 @@ import { Item, ApiResponse } from 'types'
 
 export interface FetchSingleActionPayload {
   form: boolean
-  id: string
+  id: string | number
   params: Item
   url: string
 }
