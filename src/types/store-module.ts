@@ -2,9 +2,9 @@ import {
   ApiService,
   Getters,
   State,
-  Actions,
+  FactoryActions,
   ActionsPayload,
-  Actions2,
+  Actions,
   ApiResponse,
   FetchFieldOptionsApiResponse
 } from "./index"
@@ -24,7 +24,6 @@ export interface PiniaAdapter {
   defineStore: PiniaStoreDefinition
 }
 
-
 export interface StoreModuleAdapter {
   name: 'pinia' | 'vuex',
   pinia: PiniaAdapter
@@ -43,7 +42,7 @@ export interface StoreModule {
   namespaced?: boolean
   state: State
   getters: Getters
-  actions: Actions
+  actions: FactoryActions
 }
 
 export interface Item {
@@ -56,30 +55,31 @@ export interface ItemOfItem {
 
 export interface GetNormalizedNamespaced {
   key: string
-  payload: State | Getters | Actions
+  payload: State | Getters | FactoryActions
 }
 
+export interface GlobalStoreVariableState {
+  [key: `${string}/list`]: State['list']
+  [key: `${string}/totalPages`]: State['totalPages']
+  [key: `${string}/filters`]: State['filters']
+}
 
-type GlobalStoreVariableState = (
-  Record<`${string}/${keyof State}`, State['list'] | State['totalPages'] | State['filters']>
-)
-
-type GlobalStoreVariableGetters = (
-  Record<
-    `${string}/${keyof Getters}`,
-    Getters['list'] | Getters['totalPages'] | Getters['filters'] | Getters['byId']
-  >
-)
+export interface GlobalStoreVariableGetters {
+  [key: `${string}/list`]: Getters['list']
+  [key: `${string}/totalPages`]: Getters['totalPages']
+  [key: `${string}/filters`]: Getters['filters']
+  [key: `${string}/byId`]: Getters['byId']
+}
 
 export interface GlobalStoreVariableActions {
-  [key: `${string}/create`]: Actions2['create']
-  [key: `${string}/destroy`]: Actions2['destroy']
-  [key: `${string}/fetchFieldOptions`]: Actions2['fetchFieldOptions']
-  [key: `${string}/fetchFilters`]: Actions2['fetchFilters']
-  [key: `${string}/fetchList`]: Actions2['fetchList']
-  [key: `${string}/fetchSingle`]: Actions2['fetchSingle']
-  [key: `${string}/replace`]: Actions2['replace']
-  [key: `${string}/update`]: Actions2['update']
+  [key: `${string}/create`]: Actions['create']
+  [key: `${string}/destroy`]: Actions['destroy']
+  [key: `${string}/fetchFieldOptions`]: Actions['fetchFieldOptions']
+  [key: `${string}/fetchFilters`]: Actions['fetchFilters']
+  [key: `${string}/fetchList`]: Actions['fetchList']
+  [key: `${string}/fetchSingle`]: Actions['fetchSingle']
+  [key: `${string}/replace`]: Actions['replace']
+  [key: `${string}/update`]: Actions['update']
 }
 
 export interface GlobalStoreVariable {
@@ -87,6 +87,7 @@ export interface GlobalStoreVariable {
   getters: GlobalStoreVariableGetters
   state: GlobalStoreVariableState
   dispatch: (
-    resource: keyof GlobalStoreVariableActions, payload: ActionsPayload
+    resource: keyof GlobalStoreVariableActions,
+    payload: ActionsPayload
   ) => Promise<AxiosResponse<ApiResponse | FetchFieldOptionsApiResponse>>
 }

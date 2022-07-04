@@ -3,7 +3,7 @@ import {
   ActionsFnHandlerTuple,
   FetchFieldOptionsActionPayload,
   FetchFieldOptionsApiResponse
-} from '../../types'
+} from 'types'
 
 import { AxiosResponse } from 'axios'
 import { getActionPayload } from '../../utils'

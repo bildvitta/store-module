@@ -1,10 +1,11 @@
 import {
-  ActionsFnParams,
-  NamespacedState,
   ActionsFnHandlerTuple,
+  ActionsFnParams,
   FetchSingleActionPayload,
-  Item
-} from '../../types'
+  FetchSingleApiResponse,
+  Item,
+  NamespacedState
+} from 'types'
 
 import { AxiosResponse } from 'axios'
 
@@ -14,7 +15,7 @@ export default (configParams: ActionsFnParams) => {
   return async function (
     this: NamespacedState,
     ...args: ActionsFnHandlerTuple<FetchSingleActionPayload>
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse<FetchSingleApiResponse>> {
     const { apiService, isPinia, options, resource, idKey } = configParams
 
     const payload = getActionPayload(isPinia, ...args) as FetchSingleActionPayload

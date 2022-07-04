@@ -1,10 +1,11 @@
 import {
-  ActionsFnParams,
-  NamespacedState,
   ActionsFnHandlerTuple,
+  ActionsFnParams,
+  Item,
+  NamespacedState,
   UpdateActionPayload,
-  Item
-} from '../../types'
+  UpdateApiResponse
+} from 'types'
 
 import { AxiosResponse } from 'axios'
 
@@ -14,7 +15,7 @@ export default (configParams: ActionsFnParams) => {
   return async function (
     this: NamespacedState,
     ...args: ActionsFnHandlerTuple<UpdateActionPayload>
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse<UpdateApiResponse>> {
     const { apiService, isPinia, options, resource, idKey } = configParams
 
     const { id, payload, url } = getActionPayload(isPinia, ...args) as UpdateActionPayload

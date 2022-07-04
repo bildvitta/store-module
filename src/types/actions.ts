@@ -76,7 +76,7 @@ export type ActionCallback<T, A> = (
   ...args: ActionsFnHandlerTuple<T>
 ) => Promise<AxiosResponse<A>>
 
-export interface Actions {
+export interface FactoryActions {
   destroy: ActionCallback<DestroyActionPayload, DestroyApiResponse>
   fetchFieldOptions: ActionCallback<FetchFieldOptionsActionPayload, FetchFieldOptionsApiResponse>
   fetchFilters: ActionCallback<FetchFiltersActionPayload, FetchFiltersApiResponse>
@@ -87,7 +87,7 @@ export interface Actions {
   create: ActionCallback<CreateActionPayload, CreateApiResponse>
 }
 
-export interface Actions2 {
+export interface Actions {
   destroy: (payload: DestroyActionPayload) => Promise<AxiosResponse<DestroyApiResponse>>
   fetchFieldOptions: (payload: FetchFieldOptionsActionPayload) => Promise<AxiosResponse<FetchFieldOptionsApiResponse>>
   fetchFilters: (payload: FetchFiltersActionPayload) => Promise<AxiosResponse<FetchFiltersApiResponse>>

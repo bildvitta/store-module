@@ -5,7 +5,7 @@ import {
   NamespacedState,
   DestroyApiResponse,
   Item
-} from '../../types'
+} from 'types'
 
 import { AxiosResponse } from 'axios'
 

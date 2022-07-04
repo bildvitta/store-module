@@ -9,7 +9,7 @@ import {
   StoreModule,
   StoreModuleOptions,
   StoreModuleAdapter,
-  Actions2,
+  Actions,
   GlobalStoreVariable,
   GetNormalizedNamespaced
 } from 'types'
@@ -41,10 +41,10 @@ export default class {
   private modules: Record<string, StoreModule> = {}
 
   private globalStoreVariable: GlobalStoreVariable = {
-    state: {},
-    getters: {},
+    _actions: {},
     dispatch,
-    _actions: {}
+    getters: {},
+    state: {},
   }
 
   constructor (private options: StoreModuleOptions) {
@@ -132,7 +132,7 @@ export default class {
     const object: Record<string, unknown> = {}
 
     for (const stateKey in payload) {
-      const typedKey = stateKey as keyof (State | Getters | Actions2)
+      const typedKey = stateKey as keyof (State | Getters | Actions)
       const state = payload[typedKey]
 
       object[`${key}/${typedKey}`] = state

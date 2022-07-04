@@ -1,4 +1,10 @@
-import { SetStateParams, NamespacedState, StateParams, StateParamsByKey, State } from '../types'
+import {
+  SetStateParams,
+  NamespacedState,
+  StateParams,
+  StateParamsByKey,
+  State
+} from 'types'
 
 /**
  * @example setStateByKey.call(this, { isPinia: true, key: 'list', value: [] })
