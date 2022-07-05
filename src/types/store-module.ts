@@ -40,8 +40,8 @@ export interface StoreModuleOptions {
 
 export interface StoreModule {
   namespaced?: boolean
-  state: State
-  getters: Getters
+  state: () => State
+  getters?: Getters
   actions: FactoryActions
 }
 

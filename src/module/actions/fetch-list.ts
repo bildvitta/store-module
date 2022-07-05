@@ -26,16 +26,18 @@ export default (configParams: ActionsFnParams) => {
       search,
       url
     } = getActionPayload(isPinia, ...args) as FetchListActionPayload
+    console.log("🚀 ~ file: fetch-list.ts ~ line 29 ~ getActionPayload(isPinia, ...args) as FetchListActionPayload", getActionPayload(isPinia, ...args) as FetchListActionPayload)
 
     const defaultPerPage = perPage || 12
-
+    
     const params = {
       ...filters,
       limit: limit || defaultPerPage,
-      offset: (page - 1) * (limit || defaultPerPage),
+      offset: ((page || 1) - 1) * (limit || defaultPerPage),
       ordering: ordering?.length ? ordering.join(',') : null,
       search
     }
+    console.log("🚀 ~ file: fetch-list.ts ~ line 34 ~ params", params)
 
     const normalizedURL = url || options.fetchListURL || `/${resource}/`
 
@@ -45,11 +47,15 @@ export default (configParams: ActionsFnParams) => {
 
       const state = getState.call(this, { isPinia, resource })
 
+      console.log(normalizedURL, '>>>> results')
+
       increment && page > 1
         ? state.list.push(...results)
         : state.list = results || []
 
       state.totalPages = Math.ceil(count / defaultPerPage)
+
+      console.log(state, '>>>>> state')
 
       return response
     } catch (error) {
