@@ -1,7 +1,6 @@
 import {
   ApiService,
   CallbackFn,
-  NamespacedState,
   ItemOfItem,
   Item,
   ActionsFnHandlerTuple,
@@ -35,7 +34,7 @@ export interface ActionsFnParams {
   isPinia: boolean
   options: ModuleOptions
   perPage?: number
-  resource: keyof NamespacedState
+  resource: string
 }
 
 export type ActionsPayload = (

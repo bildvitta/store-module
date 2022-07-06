@@ -3,33 +3,27 @@ import {
   Getters,
   State,
   FactoryActions,
-  ActionsPayload,
   Actions,
-  ApiResponse,
-  FetchFieldOptionsApiResponse
 } from "./index"
 
-import { AxiosResponse } from 'axios'
-
 import { ActionContext } from 'vuex'
+import { StoreDefinition } from 'pinia'
 
 export type ActionsFnHandlerTuple<T> = [ActionContext<State, any> | T, T]
 
 export type CallbackFn = (...url: unknown[]) => string
 
-export type PiniaStoreDefinition = (id: string, options: StoreModule) => void
+// export type PiniaStoreDefinition = (id: string, options: StoreModule) => void
 
-export interface PiniaAdapter {
-  // TODO alterar any para actions
-  defineStore: PiniaStoreDefinition
-}
+export type PiniaStoreDefinition = StoreDefinition<string, State, Getters, Actions>
 
-export interface StoreModuleAdapter {
-  name: 'pinia' | 'vuex',
-  pinia: PiniaAdapter
-}
+export type StoreModuleAdapter = 'pinia' | 'vuex'
+
+export type ExternalActions = Record<string, <T extends unknown>(...args: T[]) => unknown>
+// export type ExternalGetters = Record<string, >
 
 export interface StoreModuleOptions {
+  actions: ExternalActions
   adapter: StoreModuleAdapter
   apiService: ApiService
   getters: Getters
@@ -41,7 +35,7 @@ export interface StoreModuleOptions {
 export interface StoreModule {
   namespaced?: boolean
   state: () => State
-  getters?: Getters
+  getters: Getters
   actions: FactoryActions
 }
 
@@ -54,40 +48,6 @@ export interface ItemOfItem {
 }
 
 export interface GetNormalizedNamespaced {
-  key: string
-  payload: State | Getters | FactoryActions
-}
-
-export interface GlobalStoreVariableState {
-  [key: `${string}/list`]: State['list']
-  [key: `${string}/totalPages`]: State['totalPages']
-  [key: `${string}/filters`]: State['filters']
-}
-
-export interface GlobalStoreVariableGetters {
-  [key: `${string}/list`]: Getters['list']
-  [key: `${string}/totalPages`]: Getters['totalPages']
-  [key: `${string}/filters`]: Getters['filters']
-  [key: `${string}/byId`]: Getters['byId']
-}
-
-export interface GlobalStoreVariableActions {
-  [key: `${string}/create`]: Actions['create']
-  [key: `${string}/destroy`]: Actions['destroy']
-  [key: `${string}/fetchFieldOptions`]: Actions['fetchFieldOptions']
-  [key: `${string}/fetchFilters`]: Actions['fetchFilters']
-  [key: `${string}/fetchList`]: Actions['fetchList']
-  [key: `${string}/fetchSingle`]: Actions['fetchSingle']
-  [key: `${string}/replace`]: Actions['replace']
-  [key: `${string}/update`]: Actions['update']
-}
-
-export interface GlobalStoreVariable {
-  _actions: GlobalStoreVariableActions
-  getters: GlobalStoreVariableGetters
-  state: GlobalStoreVariableState
-  dispatch: (
-    resource: keyof GlobalStoreVariableActions,
-    payload: ActionsPayload
-  ) => Promise<AxiosResponse<ApiResponse | FetchFieldOptionsApiResponse>>
+  payload: string[]
+  module: PiniaStoreDefinition
 }

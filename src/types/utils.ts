@@ -2,7 +2,7 @@ import { NamespacedState, State } from './index'
 
 export interface StateParams {
   isPinia: boolean
-  resource: keyof NamespacedState
+  resource: string
 }
 
 export interface StateParamsByKey extends StateParams {

@@ -26,7 +26,6 @@ export default (configParams: ActionsFnParams) => {
       search,
       url
     } = getActionPayload(isPinia, ...args) as FetchListActionPayload
-    console.log("🚀 ~ file: fetch-list.ts ~ line 29 ~ getActionPayload(isPinia, ...args) as FetchListActionPayload", getActionPayload(isPinia, ...args) as FetchListActionPayload)
 
     const defaultPerPage = perPage || 12
     
@@ -37,7 +36,6 @@ export default (configParams: ActionsFnParams) => {
       ordering: ordering?.length ? ordering.join(',') : null,
       search
     }
-    console.log("🚀 ~ file: fetch-list.ts ~ line 34 ~ params", params)
 
     const normalizedURL = url || options.fetchListURL || `/${resource}/`
 
