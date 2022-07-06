@@ -20,16 +20,17 @@ export type PiniaStoreDefinition = StoreDefinition<string, State, Getters, Actio
 export type StoreModuleAdapter = 'pinia' | 'vuex'
 
 export type ExternalActions = Record<string, <T extends unknown>(...args: T[]) => unknown>
-// export type ExternalGetters = Record<string, >
+export type ExternalState = Record<string, unknown>
+export type ExternalGetters = Record<keyof (State | ExternalState), unknown>
 
 export interface StoreModuleOptions {
   actions: ExternalActions
   adapter: StoreModuleAdapter
   apiService: ApiService
-  getters: Getters
+  getters: ExternalGetters
   idKey: string
   perPage: number
-  state: State
+  state: ExternalState
 }
 
 export interface StoreModule {

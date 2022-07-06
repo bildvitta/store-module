@@ -9,13 +9,14 @@ export default defineConfig({
     target: 'ES6',
     lib: {
       entry: 'src/main.ts',
-      name: 'ChangeMe',
+      name: 'main',
     },
     sourcemap: true
   },
   resolve: {
     alias: {
-      types: path.resolve(__dirname, './src/types')
+      types: path.resolve(__dirname, './src/types'),
+      utils: path.resolve(__dirname, './src/utils')
     }
   },
   plugins: [dts()]

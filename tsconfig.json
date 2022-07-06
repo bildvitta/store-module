@@ -21,7 +21,7 @@
     "declarationDir": "./src/types",
     "types": ["vite/client"],
     "paths": {
-      "types": ["./src/types"]
+      "types": ["./src/types", "./src/utils"]
     }
   },
   "include": ["src"]

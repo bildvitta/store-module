@@ -1,10 +1,9 @@
 import {
-  // ApiService,
   ActionsFnParams,
   ApiService,
-  Getters,
+  ExternalGetters,
   ModuleOptions,
-  State,
+  ExternalState,
   StoreModule,
   StoreModuleOptions,
   ExternalActions
@@ -13,7 +12,6 @@ import {
 import {
   state,
   getters,
-  // actions
   destroy,
   fetchList,
   fetchFilters,
@@ -27,18 +25,18 @@ import {
 export default class {
   private apiService: ApiService
   private actions: ExternalActions
-  private getters: Getters
+  private getters: ExternalGetters
   private idKey: string = 'uuid'
   private isPinia: boolean
   private isVuex: boolean
   // private perPage: number
-  private state: State
+  private state: ExternalState
 
   constructor (private options: StoreModuleOptions) {
     this.apiService = this.options.apiService
 
     if (!this.apiService) {
-      throw new Error('Please, provide an "apiService"')
+      throw new Error('Please, provide the "apiService"')
     }
 
     this.actions = this.options.actions || {}
@@ -46,7 +44,6 @@ export default class {
     this.state = this.options.state || {}
 
     this.idKey = this.options.idKey
-    // this.perPage = _this.options.perPage
 
     this.isPinia = (this.options.adapter || 'pinia') === 'pinia'
     this.isVuex = !this.isPinia
@@ -69,24 +66,27 @@ export default class {
       state: () => {
         return {
           ...state(),
+
           ...this.state
         }
       },
 
       getters: {
         ...getters(idKey),
+
         ...this.getters
       },
 
       actions: {
+        create: create(actionsPayload),
         destroy: destroy(actionsPayload),
         fetchFieldOptions: fetchFieldOptions(actionsPayload),
         fetchFilters: fetchFilters(actionsPayload),
         fetchList: fetchList(actionsPayload),
         fetchSingle: fetchSingle(actionsPayload),
-        update: update(actionsPayload),
         replace: replace(actionsPayload),
-        create: create(actionsPayload),
+        update: update(actionsPayload),
+
         ...this.actions
       }
     }
