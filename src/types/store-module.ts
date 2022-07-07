@@ -13,8 +13,6 @@ export type ActionsFnHandlerTuple<T> = [ActionContext<State, any> | T, T]
 
 export type CallbackFn = (...url: unknown[]) => string
 
-// export type PiniaStoreDefinition = (id: string, options: StoreModule) => void
-
 export type PiniaStoreDefinition = StoreDefinition<string, State, Getters, Actions>
 
 export type StoreModuleAdapter = 'pinia' | 'vuex'
@@ -52,3 +50,5 @@ export interface GetNormalizedNamespaced {
   payload: string[]
   module: PiniaStoreDefinition
 }
+
+export type AvailableAdapters = ['pinia', 'vuex']

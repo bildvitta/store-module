@@ -1,6 +1,6 @@
 import {
   ActionsFnParams,
-  ApiService,
+  AvailableAdapters,
   ExternalGetters,
   ModuleOptions,
   ExternalState,
@@ -23,27 +23,27 @@ import {
 } from './module'
 
 export default class {
-  private apiService: ApiService
   private actions: ExternalActions
   private getters: ExternalGetters
-  private idKey: string = 'uuid'
-  private isPinia: boolean
-  private isVuex: boolean
-  // private perPage: number
   private state: ExternalState
 
-  constructor (private options: StoreModuleOptions) {
-    this.apiService = this.options.apiService
+  private isPinia: boolean
+  private isVuex: boolean
 
-    if (!this.apiService) {
+  constructor (private options: StoreModuleOptions) {
+    if (!this.options.apiService) {
       throw new Error('Please, provide the "apiService"')
+    }
+
+    const availableAdapters: AvailableAdapters = ['pinia', 'vuex']
+
+    if (availableAdapters.includes(this.options.adapter)) {
+      throw new Error('Wrong adapter, available adapters are: "pinia"(default) or "vuex"')
     }
 
     this.actions = this.options.actions || {}
     this.getters = this.options.getters || {}
     this.state = this.options.state || {}
-
-    this.idKey = this.options.idKey
 
     this.isPinia = (this.options.adapter || 'pinia') === 'pinia'
     this.isVuex = !this.isPinia
@@ -51,14 +51,14 @@ export default class {
 
   public getStoreModule (resource: string, options: ModuleOptions): StoreModule {
     const actionsPayload: ActionsFnParams = {
-      apiService: this.apiService,
-      idKey: this.idKey,
+      apiService: this.options.apiService,
+      idKey: this.options.idKey || 'uud',
       isPinia: this.isPinia,
       options,
       resource
     }
 
-    const idKey = options.idKey || this.idKey
+    const idKey = options.idKey || this.options.idKey
 
     const store: StoreModule = {
       ...(this.isVuex && { namespaced: true }),

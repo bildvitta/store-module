@@ -7,7 +7,10 @@ import { ActionsFnHandlerTuple, PayloadActionType } from 'types'
  *
  * @link ActionContext: https://github.com/vuejs/vuex/blob/01f87f0c3d59d0796a2535719dfa8328d1af390d/types/index.d.ts#L62-L69
  */
-export default (isPinia: boolean, ...args: ActionsFnHandlerTuple<PayloadActionType>): PayloadActionType => {
+export default (
+  isPinia: boolean,
+  ...args: ActionsFnHandlerTuple<PayloadActionType>
+): PayloadActionType => {
   const argIndex: number = isPinia ? 0 : 1
 
   return (args[argIndex] || {}) as PayloadActionType
