@@ -37,7 +37,7 @@ export default class {
 
     const availableAdapters: AvailableAdapters = ['pinia', 'vuex']
 
-    if (availableAdapters.includes(this.options.adapter)) {
+    if (!availableAdapters.includes(this.options.adapter)) {
       throw new Error('Wrong adapter, available adapters are: "pinia"(default) or "vuex"')
     }
 
@@ -50,15 +50,16 @@ export default class {
   }
 
   public getStoreModule (resource: string, options: ModuleOptions): StoreModule {
+    const idKey = options.idKey || this.options.idKey || 'uuid'
+
     const actionsPayload: ActionsFnParams = {
       apiService: this.options.apiService,
-      idKey: this.options.idKey || 'uud',
       isPinia: this.isPinia,
+      idKey,
       options,
       resource
     }
 
-    const idKey = options.idKey || this.options.idKey
 
     const store: StoreModule = {
       ...(this.isVuex && { namespaced: true }),

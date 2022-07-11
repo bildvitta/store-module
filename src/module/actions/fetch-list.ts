@@ -41,20 +41,15 @@ export default (configParams: ActionsFnParams) => {
 
     try {
       const response = await apiService.get(normalizedURL, { params })
-      console.log("🚀 ~ file: fetch-list.ts ~ line 44 ~ response", response)
       const { results, count } = response.data
 
       const state = getState.call(this, { isPinia, resource })
-
-      console.log({ isPinia, resource }, '>>>> results')
 
       increment && page > 1
         ? state.list.push(...results)
         : state.list = results || []
 
       state.totalPages = Math.ceil(count / defaultPerPage)
-
-      console.log(state, '>>>>> state')
 
       return response
     } catch (error) {
