@@ -28,7 +28,7 @@ export default (configParams: ActionsFnParams) => {
     } = getActionPayload(isPinia, ...args) as FetchListActionPayload
 
     const defaultPerPage = perPage || 12
-    
+
     const params = {
       ...filters,
       limit: limit || defaultPerPage,
