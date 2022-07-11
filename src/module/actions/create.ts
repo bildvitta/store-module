@@ -31,12 +31,13 @@ export default (configParams: ActionsFnParams) => {
 
     try {
       const response = await apiService.post(normalizedURL, payload)
-      const { data } = response
+      const { result } = response.data
 
       const state = getState.call(this, { isPinia, resource })
+      const hasResult: boolean = !!Object.keys(result || {}).length
 
-      if (data) {
-        state.list.push(data)
+      if (hasResult) {
+        state.list.push(result)
       }
 
       return response
