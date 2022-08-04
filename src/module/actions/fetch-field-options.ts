@@ -8,7 +8,7 @@ import {
 import { AxiosResponse } from 'axios'
 import { getActionPayload } from '../../utils'
 
-export default function test (configParams: ActionsFnParams) {
+export default (configParams: ActionsFnParams) => {
   return function (
     ...args: ActionsFnHandlerTuple<FetchFieldOptionsActionPayload>
   ): Promise<AxiosResponse<FetchFieldOptionsApiResponse>> {
