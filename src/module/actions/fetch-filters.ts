@@ -3,12 +3,12 @@ import {
   NamespacedState,
   ActionsFnHandlerTuple,
   FetchFiltersActionPayload,
-  FetchFiltersApiResponse
+  FetchFiltersApiResponse,
+  State
 } from 'types'
 
 import { AxiosResponse } from 'axios'
-
-import { getState, getActionPayload } from '../../utils'
+import { getStateFromAction, getActionPayload } from '@bildvitta/store-adapter'
 
 export default (configParams: ActionsFnParams) => {
   return async function (
@@ -33,7 +33,7 @@ export default (configParams: ActionsFnParams) => {
       const response = await apiService.get(normalizedURL, { params })
       const { fields } = response.data
 
-      const state = getState.call(this, { isPinia, resource })
+      const state = getStateFromAction.call(this, { isPinia, resource }) as State
 
       state.filters = fields
 

@@ -4,12 +4,14 @@ import {
   DestroyActionPayload,
   NamespacedState,
   DestroyApiResponse,
+  State,
   Item
 } from 'types'
 
 import { AxiosResponse } from 'axios'
 
-import { run, getState, getActionPayload } from '../../utils'
+import { run } from '../../utils'
+import { getStateFromAction, getActionPayload } from '@bildvitta/store-adapter'
 
 export default (destroyConfig: ActionsFnParams) => {
   return async function (
@@ -36,7 +38,7 @@ export default (destroyConfig: ActionsFnParams) => {
     try {
       const response = await apiService.delete(normalizedURL, { params })
 
-      const state = getState.call(this, { isPinia, resource })
+      const state = getStateFromAction.call(this, { isPinia, resource }) as State
 
       const index = state.list.findIndex((item: Item) => item[idKey] === id)
 

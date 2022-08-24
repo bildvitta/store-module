@@ -37,7 +37,7 @@ export default class {
 
     const availableAdapters: AvailableAdapters = ['pinia', 'vuex']
 
-    if (!availableAdapters.includes(this.options.adapter)) {
+    if (!availableAdapters.includes('pinia')) {
       throw new Error('Wrong adapter, available adapters are: "pinia"(default) or "vuex"')
     }
 

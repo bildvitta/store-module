@@ -3,12 +3,12 @@ import {
   NamespacedState,
   ActionsFnHandlerTuple,
   CreateActionPayload,
-  CreateApiResponse
+  CreateApiResponse,
+  State
 } from 'types'
 
 import { AxiosResponse } from 'axios'
-
-import { getState, getActionPayload } from '../../utils'
+import { getStateFromAction, getActionPayload } from '@bildvitta/store-adapter'
 
 export default (configParams: ActionsFnParams) => {
   return async function (
@@ -33,7 +33,7 @@ export default (configParams: ActionsFnParams) => {
       const response = await apiService.post(normalizedURL, payload)
       const { result } = response.data
 
-      const state = getState.call(this, { isPinia, resource })
+      const state = getStateFromAction.call(this, { isPinia, resource }) as State
       const hasResult: boolean = !!Object.keys(result || {}).length
 
       if (hasResult) {

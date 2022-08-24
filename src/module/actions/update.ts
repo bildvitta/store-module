@@ -4,12 +4,14 @@ import {
   Item,
   NamespacedState,
   UpdateActionPayload,
-  UpdateApiResponse
+  UpdateApiResponse,
+  State
 } from 'types'
 
 import { AxiosResponse } from 'axios'
 
-import { getState, getActionPayload, run } from '../../utils'
+import { run } from '../../utils'
+import { getStateFromAction, getActionPayload } from '@bildvitta/store-adapter'
 
 export default (configParams: ActionsFnParams) => {
   return async function (
@@ -37,7 +39,7 @@ export default (configParams: ActionsFnParams) => {
       const response = await apiService.patch(normalizedURL, payload)
       const { result } = response.data
 
-      const state = getState.call(this, { isPinia, resource })
+      const state = getStateFromAction.call(this, { isPinia, resource }) as State
 
       for (const index in state.list) {
         const item: Item = state.list[index]

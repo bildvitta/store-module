@@ -6,7 +6,7 @@ import {
 } from 'types'
 
 import { AxiosResponse } from 'axios'
-import { getActionPayload } from '../../utils'
+import { getActionPayload } from '@bildvitta/store-adapter'
 
 export default function test (configParams: ActionsFnParams) {
   return function (

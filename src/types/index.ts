@@ -4,7 +4,6 @@ export * from './api-service'
 export * from './store-module'
 export * from './utils'
 export * from './actions'
-export * from './plugins'
 
 export * from './actions/destroy'
 export * from './actions/fetch-list'

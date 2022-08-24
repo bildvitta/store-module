@@ -3,12 +3,12 @@ import {
   NamespacedState,
   ActionsFnHandlerTuple,
   FetchListActionPayload,
-  FetchListApiResponse
+  FetchListApiResponse,
+  State
 } from 'types'
 
 import { AxiosResponse } from 'axios'
-
-import { getState, getActionPayload } from '../../utils'
+import { getStateFromAction, getActionPayload } from '@bildvitta/store-adapter'
 
 export default (configParams: ActionsFnParams) => {
   return async function (
@@ -43,7 +43,7 @@ export default (configParams: ActionsFnParams) => {
       const response = await apiService.get(normalizedURL, { params })
       const { results, count } = response.data
 
-      const state = getState.call(this, { isPinia, resource })
+      const state = getStateFromAction.call(this, { isPinia, resource }) as State
 
       increment && page > 1
         ? state.list.push(...results)
