@@ -11,7 +11,7 @@ npm i @bildvitta/store-module
 ## 2. Usando com Pinia
 Para utilizar o StoreModule, você precisa inicializa-lo passando o adapter `pinia` e o apiService `axios`, exemplo:
 
-Crie um arquivo chamado `store-module.js` contendo:
+1. Crie um arquivo chamado `store-module.js` contendo:
 ```js
 import StoreModule from '@bildvitta/store-module'
 import axios from 'axios'
@@ -24,9 +24,7 @@ const storeModule = new StoreModule({
 export default storeModule
 ```
 
-Após a inicialização, vamos criar uma store de usuários contendo:
-
-Vamos criar um arquivo `users.js` contendo:
+2. Após a inicialização, vamos criar uma store de usuários, para isto crie um arquivo `users.js` contendo:
 ```js
 import storeModule from 'caminho-do-arquivo-store-module.js' // arquivo que inicializamos o StoreModule
 import { defineStore } from 'pinia'
@@ -34,8 +32,7 @@ import { defineStore } from 'pinia'
 export default defineStore('users', storeModule.createStoreModule('users'))
 ```
 
-Pronto, a store foi criada com sucesso! Agora vamos importar a store para ver como poderia utilizar ela.
-
+3. Pronto, a store foi criada com sucesso! Agora vamos importar a store para ver como poderia utilizar ela.
 ```js
 import usersStore from 'caminho-do-arquivo-users.js' // arquivo que criamos nossa store de usuários.
 
@@ -75,7 +72,6 @@ export default boot(({ app }) => {
 
 ## 3. Usando com Vuex
 1. Como a biblioteca da compatibilidade tanto para pinia quanto para vuex, não existem `mutations` dentro de nossas stores pois não existe mutations no pinia, por isto, **precisamos desativar o modo `strict`** do vuex, para isto, vá até a inicialização do vuex e desative passando `strict: false`, exemplo:
-
 ```js
 export default store(function (/* { ssrContext } */) {
   const Store = createStore({
@@ -87,14 +83,10 @@ export default store(function (/* { ssrContext } */) {
   return Store
 })
 ```
-
 Caso você não desative o strict, vai disparar vários erros avisando que existem states sendo alterados fora de mutations.
-
 > Error: [vuex] Do not mutate vuex store state outside mutation handlers
 
-2. Para utilizar o `StoreModule` com o vuex, você precisa inicializa-lo passando o adapter `vuex` e o apiService `axios`, exemplo:
-Crie um arquivo chamado `store-module.js` contendo:
-
+2. Para utilizar o `StoreModule` com o vuex, você precisa inicializa-lo passando o adapter `vuex` e o apiService `axios`, para isto crie um arquivo chamado `store-module.js` contendo:
 ```js
 import StoreModule from '@bildvitta/store-module'
 import axios from 'axios'
@@ -107,16 +99,14 @@ const storeModule = new StoreModule({
 export default storeModule
 ```
 
-3. Após a inicialização, vamos criar uma store de usuários contendo:
-Vamos criar um arquivo `users.js` contendo:
-
+3. Após a inicialização, vamos criar uma store de usuários, para isto crie um arquivo `users.js` contendo:
 ```js
 import storeModule from 'caminho-do-arquivo-store-module.js'
 
 export default storeModule.getStoreModule('users')
 ```
 
-4. Após, isto vamos no arquivo onde foi inicializado o `Vuex`, vamos importar o `users.js` e adicionar ele dentro de `modules`, exemplo:
+4. Após, isto vamos no arquivo onde foi inicializado o `Vuex`, vamos importar o `users.js` e adicionar ele dentro de `modules`:
 ```js
 import users from 'caminho-do-users.js'
 
