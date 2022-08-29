@@ -95,50 +95,50 @@ Caso você não desative o strict, vai disparar vários erros avisando que exist
 2. Para utilizar o `StoreModule` com o vuex, você precisa inicializa-lo passando o adapter `vuex` e o apiService `axios`, exemplo:
 Crie um arquivo chamado `store-module.js` contendo:
 
-    ```js
-    import StoreModule from '@bildvitta/store-module'
-    import axios from 'axios'
+```js
+import StoreModule from '@bildvitta/store-module'
+import axios from 'axios'
 
-    const storeModule = new StoreModule({
-      apiService: axios,
-      adapter: 'vuex'
-    })
+const storeModule = new StoreModule({
+  apiService: axios,
+  adapter: 'vuex'
+})
 
-    export default storeModule
-    ```
+export default storeModule
+```
 
 3. Após a inicialização, vamos criar uma store de usuários contendo:
 Vamos criar um arquivo `users.js` contendo:
 
-    ```js
-    import storeModule from 'caminho-do-arquivo-store-module.js'
+```js
+import storeModule from 'caminho-do-arquivo-store-module.js'
 
-    export default storeModule.getStoreModule('users')
-    ```
+export default storeModule.getStoreModule('users')
+```
 
 4. Após, isto vamos no arquivo onde foi inicializado o `Vuex`, vamos importar o `users.js` e adicionar ele dentro de `modules`, exemplo:
-    ```js
-    import users from 'caminho-do-users.js'
+```js
+import users from 'caminho-do-users.js'
 
-    export default store(function (/* { ssrContext } */) {
-      const Store = createStore({
-        modules: {
-          users // ----------------------Aqui adicionamos o modulo users!!!----------------------
-        },
+export default store(function (/* { ssrContext } */) {
+  const Store = createStore({
+    modules: {
+      users // ----------------------Aqui adicionamos o modulo users!!!----------------------
+    },
 
-        strict: false
-      })
+    strict: false
+  })
 
-      return Store
-    })
-    ```
+  return Store
+})
+```
 
 5. Pronto, a store foi criada com sucesso! Agora vamos importar a store para ver como poderia utilizar ela.
-    ```js
-    import usersStore from 'caminho-do-arquivo-users.js' // arquivo que criamos nossa store de usuários.
+```js
+import usersStore from 'caminho-do-arquivo-users.js' // arquivo que criamos nossa store de usuários.
 
-    import { mapActions, mapGetters, mapState } from 'vuex' // para utilizar o vuex é a forma convencional
-    ```
+import { mapActions, mapGetters, mapState } from 'vuex' // para utilizar o vuex é a forma convencional
+```
 
 ### 3.1. Usando com Vuex e Asteroid
 Para utilizar esta biblioteca com Vuex e [Asteroid](https://github.com/bildvitta/asteroid), **não** é necessário nenhuma configuração adicional.
