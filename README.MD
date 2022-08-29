@@ -134,13 +134,13 @@ import { mapActions, mapGetters, mapState } from 'vuex' // para utilizar o vuex 
 Para utilizar esta biblioteca com Vuex e [Asteroid](https://github.com/bildvitta/asteroid), **não** é necessário nenhuma configuração adicional.
 
 ## 4. Estrutura da *store* gerada
-`state`
+state
 ├── list
 ├── filters
 └── totalPages
-`getters`
+getters
 └── byId
-`actions`
+actions
 ├── create
 ├── destroy
 ├── fetchFieldOptions
