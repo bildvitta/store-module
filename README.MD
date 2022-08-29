@@ -74,68 +74,71 @@ export default boot(({ app }) => {
 ```
 
 ## 3. Usando com Vuex
-Como a biblioteca da compatibilidade tanto para pinia quanto para vuex, não existem `mutations` dentro de nossas stores pois não existe mutations no pinia, por isto, precisamos desativar o modo `strict` do vuex, para isto, vá até a inicialização do vuex e desative passando `strict: false`, exemplo:
+1. Como a biblioteca da compatibilidade tanto para pinia quanto para vuex, não existem `mutations` dentro de nossas stores pois não existe mutations no pinia, por isto, **precisamos desativar o modo `strict`** do vuex, para isto, vá até a inicialização do vuex e desative passando `strict: false`, exemplo:
 
-```js
-export default store(function (/* { ssrContext } */) {
-  const Store = createStore({
-    modules: {},
+    ```js
+    export default store(function (/* { ssrContext } */) {
+      const Store = createStore({
+        modules: {},
 
-    strict: false // ----------------------Aqui desativamos o strict!!!----------------------
-  })
+        strict: false // ----------------------Aqui desativamos o strict!!!----------------------
+      })
 
-  return Store
-})
-```
+      return Store
+    })
+    ```
 
-Para utilizar o StoreModule com o vuex, você precisa inicializa-lo passando o adapter `vuex` e o apiService `axios`, exemplo:
+    Caso você não desative o strict, vai disparar vários erros avisando que existem states sendo alterados fora de mutations.
 
+    > Error: [vuex] Do not mutate vuex store state outside mutation handlers
+
+2. Para utilizar o `StoreModule` com o vuex, você precisa inicializa-lo passando o adapter `vuex` e o apiService `axios`, exemplo:
 Crie um arquivo chamado `store-module.js` contendo:
-```js
-import StoreModule from '@bildvitta/store-module'
-import axios from 'axios'
 
-const storeModule = new StoreModule({
-  apiService: axios,
-  adapter: 'vuex'
-})
+    ```js
+    import StoreModule from '@bildvitta/store-module'
+    import axios from 'axios'
 
-export default storeModule
-```
+    const storeModule = new StoreModule({
+      apiService: axios,
+      adapter: 'vuex'
+    })
 
-Após a inicialização, vamos criar uma store de usuários contendo:
+    export default storeModule
+    ```
 
+3. Após a inicialização, vamos criar uma store de usuários contendo:
 Vamos criar um arquivo `users.js` contendo:
-```js
-import storeModule from 'caminho-do-arquivo-store-module.js'
 
-export default storeModule.getStoreModule('users')
-```
+    ```js
+    import storeModule from 'caminho-do-arquivo-store-module.js'
 
-Após, isto vamos no arquivo onde foi inicializado o `Vuex`, vamos importar o `users.js` e adicionar ele dentro de `modules`, exemplo:
-```js
-import users from 'caminho-do-users.js'
+    export default storeModule.getStoreModule('users')
+    ```
 
-export default store(function (/* { ssrContext } */) {
-  const Store = createStore({
-    modules: {
-      users // ----------------------Aqui adicionamos o modulo users!!!----------------------
-    },
+4. Após, isto vamos no arquivo onde foi inicializado o `Vuex`, vamos importar o `users.js` e adicionar ele dentro de `modules`, exemplo:
+    ```js
+    import users from 'caminho-do-users.js'
 
-    strict: false
-  })
+    export default store(function (/* { ssrContext } */) {
+      const Store = createStore({
+        modules: {
+          users // ----------------------Aqui adicionamos o modulo users!!!----------------------
+        },
 
-  return Store
-})
-```
+        strict: false
+      })
 
-Pronto, a store foi criada com sucesso! Agora vamos importar a store para ver como poderia utilizar ela.
+      return Store
+    })
+    ```
 
-```js
-import usersStore from 'caminho-do-arquivo-users.js' // arquivo que criamos nossa store de usuários.
+5. Pronto, a store foi criada com sucesso! Agora vamos importar a store para ver como poderia utilizar ela.
+    ```js
+    import usersStore from 'caminho-do-arquivo-users.js' // arquivo que criamos nossa store de usuários.
 
-import { mapActions, mapGetters, mapState } from 'vuex' // para utilizar o vuex é a forma convencional
-```
+    import { mapActions, mapGetters, mapState } from 'vuex' // para utilizar o vuex é a forma convencional
+    ```
 
 ### 3.1. Usando com Vuex e Asteroid
 Para utilizar esta biblioteca com Vuex e [Asteroid](https://github.com/bildvitta/asteroid), **não** é necessário nenhuma configuração adicional.
