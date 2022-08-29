@@ -76,21 +76,21 @@ export default boot(({ app }) => {
 ## 3. Usando com Vuex
 1. Como a biblioteca da compatibilidade tanto para pinia quanto para vuex, não existem `mutations` dentro de nossas stores pois não existe mutations no pinia, por isto, **precisamos desativar o modo `strict`** do vuex, para isto, vá até a inicialização do vuex e desative passando `strict: false`, exemplo:
 
-    ```js
-    export default store(function (/* { ssrContext } */) {
-      const Store = createStore({
-        modules: {},
+```js
+export default store(function (/* { ssrContext } */) {
+  const Store = createStore({
+    modules: {},
 
-        strict: false // ----------------------Aqui desativamos o strict!!!----------------------
-      })
+    strict: false // ----------------------Aqui desativamos o strict!!!----------------------
+  })
 
-      return Store
-    })
-    ```
+  return Store
+})
+```
 
-    Caso você não desative o strict, vai disparar vários erros avisando que existem states sendo alterados fora de mutations.
+Caso você não desative o strict, vai disparar vários erros avisando que existem states sendo alterados fora de mutations.
 
-    > Error: [vuex] Do not mutate vuex store state outside mutation handlers
+> Error: [vuex] Do not mutate vuex store state outside mutation handlers
 
 2. Para utilizar o `StoreModule` com o vuex, você precisa inicializa-lo passando o adapter `vuex` e o apiService `axios`, exemplo:
 Crie um arquivo chamado `store-module.js` contendo:
