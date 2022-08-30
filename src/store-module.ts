@@ -49,8 +49,10 @@ export default class {
     this.isVuex = !this.isPinia
   }
 
-  public getStoreModule (resource: string, options: ModuleOptions): StoreModule {
-    const idKey = options.idKey || this.options.idKey || 'uuid'
+  public createStoreModule (resource: string, options: ModuleOptions): StoreModule {
+    options = options || {}
+
+    const idKey = options?.idKey || this.options.idKey || 'uuid'
 
     const actionsPayload: ActionsFnParams = {
       apiService: this.options.apiService,
@@ -59,7 +61,6 @@ export default class {
       options,
       resource
     }
-
 
     const store: StoreModule = {
       ...(this.isVuex && { namespaced: true }),

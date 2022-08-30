@@ -1,6 +1,8 @@
+import { ItemOfItem } from 'types'
+
 export interface State {
-  filters: Record<string, object>
-  list: object[]
+  filters: ItemOfItem
+  list: ItemOfItem[]
   totalPages: number
 }
 
