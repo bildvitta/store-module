@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
+    "rootDir": "./src",
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
+    "declaration": true,
     "moduleResolution": "Node",
     "strict": true,
     "sourceMap": true,
@@ -15,14 +17,11 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "skipLibCheck": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "declaration": true,
-    "declarationDir": "./src/types",
-    "types": ["vite/client"],
     "paths": {
       "types": ["./src/types", "./src/utils"]
-    }
+    },
+    "types": ["vite/client", "node"]
   },
   "include": ["src"]
 }
+

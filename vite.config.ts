@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite'
-
 import dts from 'vite-plugin-dts'
 
 const path = require('path')
@@ -10,6 +9,7 @@ export default defineConfig({
     lib: {
       entry: 'src/main.ts',
       name: 'main',
+      fileName: 'store-module'
     },
     sourcemap: true
   },
@@ -19,5 +19,7 @@ export default defineConfig({
       utils: path.resolve(__dirname, './src/utils')
     }
   },
-  plugins: [dts()]
+  plugins: [
+    dts()
+  ]
 })

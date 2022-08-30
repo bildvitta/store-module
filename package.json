@@ -1,10 +1,10 @@
 {
   "name": "@bildvitta/store-module",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "author": "Bild & Vitta <systemteam@bild.com.br>",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build ",
     "preview": "vite preview"
   },
   "keywords": [
@@ -27,11 +27,14 @@
   "main": "./dist/store-module.es.js",
   "types": "./dist/types/index.d.ts",
   "devDependencies": {
+    "@types/jest": "^29.0.0",
     "@types/node": "^18.7.13",
     "axios": "^0.27.2",
+    "dts-bundle-generator": "^6.12.0",
     "pinia": "^2.0.14",
     "typescript": "^4.5.4",
     "vite": "^2.9.9",
+    "vite-dts": "^1.0.4",
     "vue": "^3.2.37",
     "vuex": "^4.0.2"
   },

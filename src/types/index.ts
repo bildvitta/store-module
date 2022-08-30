@@ -13,3 +13,7 @@ export * from './actions/fetch-field-options'
 export * from './actions/update'
 export * from './actions/replace'
 export * from './actions/create'
+
+import StoreModule from '../store-module'
+
+export default StoreModule
