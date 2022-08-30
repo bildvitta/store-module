@@ -83,7 +83,7 @@ export default store(function (/* { ssrContext } */) {
   return Store
 })
 ```
-Caso você não desative o strict, vai disparar vários erros avisando que existem states sendo alterados fora de mutations.
+Caso você não desative o strict, vai disparar vários erros avisando que existem states sendo mutado fora de mutations.
 > Error: [vuex] Do not mutate vuex store state outside mutation handlers
 
 2. Para utilizar o `StoreModule` com o vuex, você precisa inicializa-lo passando o adapter `vuex` e o apiService `axios`, para isto crie um arquivo chamado `store-module.js` contendo:
@@ -132,6 +132,87 @@ import { mapActions, mapGetters, mapState } from 'vuex' // para utilizar o vuex 
 
 ### 3.1. Usando com Vuex e Asteroid
 Para utilizar esta biblioteca com Vuex e [Asteroid](https://github.com/bildvitta/asteroid), **não** é necessário nenhuma configuração adicional.
+
+## 4. API
+
+#### 4.1. Configuração global
+```ts
+new StoreModule(options: StoreModuleOptions).createStoreModule(
+  resource: string,
+  options: ModuleOptions
+): StoreModule
+```
+
+```ts
+export interface StoreModuleOptions {
+  // actions do vuex ou pinia adicionais
+  actions: ExternalActions
+
+  // adapter da store: pinia | vuex
+  adapter: StoreModuleAdapter
+
+  // instancia do axios
+  apiService: ApiService
+
+  // getters do vuex ou pinia adicionais
+  getters: ExternalGetters
+
+  // opção para alterar chave identificadora para ser usado como chave primaria
+  // configuração global, caso não seja configurado o padrão é "uuid"
+  idKey: string
+
+  // itens por listagem definidos na action "fetchList" (configuração global, caso não seja configurado o padrão é 12)
+  perPage: number
+
+  // state do vuex ou pinia adicionais 
+  state: ExternalState
+}
+
+export interface ModuleOptions {
+  // callback para alterar a url da action "destroy" que tem como parâmetro "{ id }"
+  destroyURL: CallbackFn
+
+  // opção para alterar a url da action "fetchFieldOptions"
+  fetchFieldOptionsURL: string
+
+  // opção para alterar a url da action "fetchFilters"
+  fetchFiltersURL: string
+
+  // opção para alterar a url da action "fetchList"
+  fetchListURL: string
+
+  // callback para alterar a url da action "fetchSingle" que tem como parâmetro "{ form, id }"
+  fetchSingleURL: CallbackFn
+
+  // opção para alterar chave identificadora para ser usado como chave primaria
+  // sobrescreve a configuração global, caso não seja configurado o padrão é
+  // configurado global StoreModuleOptions.idKey ou "uuid"
+  idKey: string,
+
+  // callback para alterar a url da action "update" que tem como parâmetro "{ id }"
+  updateURL: CallbackFn
+
+  // callback para alterar a url da action "replace" que tem como parâmetro "{ id }"
+  replaceURL: CallbackFn
+
+  // opção para alterar a url da action "create"
+  createURL: string
+}
+
+export interface StoreModule {
+  // se for vuex namespaced então tem o valor "true"
+  namespaced?: boolean
+
+  // state do pinia ou vuex
+  state: () => State
+
+  // getters do pinia ou vuex
+  getters: Getters
+
+  // actions do pinia ou vuex
+  actions: FactoryActions
+}
+```
 
 ## 4. Estrutura da *store* gerada
 ```bash
@@ -182,7 +263,6 @@ export interface Actions {
   create: (payload: CreateActionPayload) => Promise<AxiosResponse<CreateApiResponse>>
 }
 ```
-
 
 ## Roadmap
 - [ ] Instalar eslint
