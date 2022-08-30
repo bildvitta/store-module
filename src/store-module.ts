@@ -4,7 +4,7 @@ import {
   ExternalGetters,
   ModuleOptions,
   ExternalState,
-  StoreModule,
+  StoreModuleClass,
   StoreModuleOptions,
   ExternalActions
 } from 'types'
@@ -22,7 +22,7 @@ import {
   create,
 } from './module'
 
-export default class {
+export default class StoreModule {
   private actions: ExternalActions
   private getters: ExternalGetters
   private state: ExternalState
@@ -49,7 +49,7 @@ export default class {
     this.isVuex = !this.isPinia
   }
 
-  public createStoreModule (resource: string, options: ModuleOptions): StoreModule {
+  public createStoreModule (resource: string, options: ModuleOptions): StoreModuleClass {
     options = options || {}
 
     const idKey = options?.idKey || this.options.idKey || 'uuid'
@@ -62,7 +62,7 @@ export default class {
       resource
     }
 
-    const store: StoreModule = {
+    const store: StoreModuleClass = {
       ...(this.isVuex && { namespaced: true }),
 
       state: () => {

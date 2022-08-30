@@ -1,6 +1,6 @@
 {
   "name": "@bildvitta/store-module",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "author": "Bild & Vitta <systemteam@bild.com.br>",
   "scripts": {
     "dev": "vite",

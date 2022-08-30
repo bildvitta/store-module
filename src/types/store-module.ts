@@ -31,7 +31,7 @@ export interface StoreModuleOptions {
   state: ExternalState
 }
 
-export interface StoreModule {
+export interface StoreModuleClass {
   namespaced?: boolean
   state: () => State
   getters: Getters
