@@ -1,6 +1,6 @@
 {
   "name": "@bildvitta/store-module",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "author": "Bild & Vitta <systemteam@bild.com.br>",
   "scripts": {
     "dev": "vite",
@@ -25,9 +25,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "main": "./dist/store-module.es.js",
-  "types": "./dist/types/index.d.ts",
+  "types": "./dist/main.d.ts",
   "devDependencies": {
-    "@types/jest": "^29.0.0",
     "@types/node": "^18.7.13",
     "axios": "^0.27.2",
     "dts-bundle-generator": "^6.12.0",
