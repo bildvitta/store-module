@@ -134,8 +134,6 @@ import { mapActions, mapGetters, mapState } from 'vuex' // para utilizar o vuex 
 Para utilizar esta biblioteca com Vuex e [Asteroid](https://github.com/bildvitta/asteroid), **não** é necessário nenhuma configuração adicional.
 
 ## 4. API
-
-#### 4.1. Configuração global
 ```ts
 new StoreModule(options: StoreModuleOptions).createStoreModule(
   resource: string,
@@ -161,7 +159,8 @@ export interface StoreModuleOptions {
   // configuração global, caso não seja configurado o padrão é "uuid"
   idKey: string
 
-  // itens por listagem definidos na action "fetchList" (configuração global, caso não seja configurado o padrão é 12)
+  // itens por listagem definidos na action "fetchList"
+  // configuração global, caso não seja configurado o padrão é 12
   perPage: number
 
   // state do vuex ou pinia adicionais 
@@ -214,7 +213,7 @@ export interface StoreModule {
 }
 ```
 
-## 4. Estrutura da *store* gerada
+## 5. Estrutura da *store* gerada
 ```bash
 state
 ├── list
@@ -233,8 +232,8 @@ actions
 └── replace
 ```
 
-## 5. Declaração de tipos
-#### 5.1. State
+### 5.1 Declaração de tipos
+#### 5.1.1 State
 ```ts
 export interface State {
   filters: ItemOfItem
@@ -243,14 +242,14 @@ export interface State {
 }
 ```
 
-#### 5.2. Getters
+#### 5.1.2 Getters
 ```ts
 export interface Getters {
   byId: (state: State) => (id: string | number) => Item | undefined
 }
 ```
 
-#### 5.3. Actions
+#### 5.1.3 Actions
 ```ts
 export interface Actions {
   destroy: (payload: DestroyActionPayload) => Promise<AxiosResponse<DestroyApiResponse>>
