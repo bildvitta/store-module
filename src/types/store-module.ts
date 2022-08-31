@@ -19,16 +19,16 @@ export type StoreModuleAdapter = 'pinia' | 'vuex'
 
 export type ExternalActions = Record<string, <T extends unknown>(...args: T[]) => unknown>
 export type ExternalState = Record<string, unknown>
-export type ExternalGetters = Record<keyof (State | ExternalState), unknown>
+export type ExternalGetters = Record<keyof (State | ExternalState), unknown> | {}
 
 export interface StoreModuleOptions {
-  actions: ExternalActions
+  actions?: ExternalActions
   adapter: StoreModuleAdapter
   apiService: ApiService
-  getters: ExternalGetters
-  idKey: string
-  perPage: number
-  state: ExternalState
+  getters?: ExternalGetters
+  idKey?: string
+  perPage?: number
+  state?: ExternalState
 }
 
 export interface StoreModuleClass {

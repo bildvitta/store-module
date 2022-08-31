@@ -49,15 +49,15 @@ export type ActionsPayload = (
 )
 
 export interface ModuleOptions {
-  destroyURL: CallbackFn
-  fetchFieldOptionsURL: string
-  fetchFiltersURL: string
-  fetchListURL: string
-  fetchSingleURL: CallbackFn
-  idKey: string,
-  updateURL: CallbackFn
-  replaceURL: CallbackFn
-  createURL: string
+  destroyURL?: CallbackFn
+  fetchFieldOptionsURL?: string
+  fetchFiltersURL?: string
+  fetchListURL?: string
+  fetchSingleURL?: CallbackFn
+  idKey?: string,
+  updateURL?: CallbackFn
+  replaceURL?: CallbackFn
+  createURL?: string
 }
 
 export type PayloadActionType = (
