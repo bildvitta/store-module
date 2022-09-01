@@ -186,7 +186,7 @@ export interface ModuleOptions {
   // opção para alterar chave identificadora para ser usado como chave primaria
   // sobrescreve a configuração global, caso não seja configurado o padrão é
   // configurado global StoreModuleOptions.idKey ou "uuid"
-  idKey: string,
+  idKey: string
 
   // callback para alterar a url da action "update" que tem como parâmetro "{ id }"
   updateURL: CallbackFn
