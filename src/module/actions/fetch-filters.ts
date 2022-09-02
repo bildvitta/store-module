@@ -34,8 +34,6 @@ export default (configParams: ActionsFnParams) => {
       const { fields } = response.data
 
       const state = getStateFromAction.call(this, { isPinia, resource }) as State
-      console.log("🚀 ~ file: fetch-filters.ts ~ line 37 ~ this", this)
-      console.log("🚀 ~ file: fetch-filters.ts ~ line 37 ~ state", state, { isPinia, resource })
 
       state.filters = fields
 
