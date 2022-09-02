@@ -7,4 +7,6 @@ export interface FetchSingleActionPayload {
   url: string
 }
 
+export type FetchSingleURL = Pick<FetchSingleActionPayload, 'form' | 'id'>
+
 export type FetchSingleApiResponse = Omit<ApiResponse, 'results' | 'count'>

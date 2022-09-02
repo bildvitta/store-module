@@ -6,4 +6,6 @@ export interface ReplaceActionPayload {
   url: string
 }
 
+export type ReplaceURL = Pick<ReplaceActionPayload, 'id'>
+
 export type ReplaceApiResponse = ReplaceUpdateApiResponse

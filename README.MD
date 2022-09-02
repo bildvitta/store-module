@@ -169,7 +169,7 @@ export interface StoreModuleOptions {
 
 export interface ModuleOptions {
   // callback para alterar a url da action "destroy" que tem como parâmetro "{ id }"
-  destroyURL: CallbackFn
+  destroyURL: RunCallbackFn<DestroyURL>
 
   // opção para alterar a url da action "fetchFieldOptions"
   fetchFieldOptionsURL: string
@@ -181,7 +181,7 @@ export interface ModuleOptions {
   fetchListURL: string
 
   // callback para alterar a url da action "fetchSingle" que tem como parâmetro "{ form, id }"
-  fetchSingleURL: CallbackFn
+  fetchSingleURL: RunCallbackFn<FetchSingleURL>
 
   // opção para alterar chave identificadora para ser usado como chave primaria
   // sobrescreve a configuração global, caso não seja configurado o padrão é
@@ -189,10 +189,10 @@ export interface ModuleOptions {
   idKey: string
 
   // callback para alterar a url da action "update" que tem como parâmetro "{ id }"
-  updateURL: CallbackFn
+  updateURL: RunCallbackFn<UpdateURL>
 
   // callback para alterar a url da action "replace" que tem como parâmetro "{ id }"
-  replaceURL: CallbackFn
+  replaceURL: RunCallbackFn<ReplaceURL>
 
   // opção para alterar a url da action "create"
   createURL: string

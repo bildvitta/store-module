@@ -1,9 +1,10 @@
 import {
   ApiService,
-  CallbackFn,
   ItemOfItem,
   Item,
   ActionsFnHandlerTuple,
+  FetchSingleURL,
+  RunCallbackFn,
 
   // API RESPONSE
   FetchFieldOptionsApiResponse,
@@ -23,7 +24,10 @@ import {
   FetchFieldOptionsActionPayload,
   UpdateActionPayload,
   ReplaceActionPayload,
-  CreateActionPayload
+  CreateActionPayload,
+  DestroyURL,
+  UpdateURL,
+  ReplaceURL
 } from 'types'
 
 import { AxiosResponse } from 'axios'
@@ -49,14 +53,14 @@ export type ActionsPayload = (
 )
 
 export interface ModuleOptions {
-  destroyURL?: CallbackFn
+  destroyURL?: RunCallbackFn<DestroyURL>
   fetchFieldOptionsURL?: string
   fetchFiltersURL?: string
   fetchListURL?: string
-  fetchSingleURL?: CallbackFn
+  fetchSingleURL?: RunCallbackFn<FetchSingleURL>
   idKey?: string,
-  updateURL?: CallbackFn
-  replaceURL?: CallbackFn
+  updateURL?: RunCallbackFn<UpdateURL>
+  replaceURL?: RunCallbackFn<ReplaceURL>
   createURL?: string
 }
 

@@ -6,4 +6,6 @@ export interface DestroyActionPayload {
   url: string
 }
 
+export type DestroyURL = Pick<DestroyActionPayload, 'id'>
+
 export type DestroyApiResponse = Pick<ApiResponse, 'result' | 'status'>

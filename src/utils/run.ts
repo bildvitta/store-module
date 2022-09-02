@@ -1,5 +1,5 @@
 import { RunCallbackFn } from 'types'
 
-export default (fn: RunCallbackFn | string | undefined, ...parameters: unknown[]) => {
-  return typeof fn === 'function' ? fn(...parameters) : fn
+export default <T> (fn: RunCallbackFn<T> | string | undefined, parameters: T) => {
+  return typeof fn === 'function' ? fn(parameters) : fn
 }

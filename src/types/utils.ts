@@ -3,10 +3,5 @@ export interface StateParams {
   resource: string
 }
 
+export type RunCallbackFn <T> = (url: T) => string | undefined
 
-export type RunCallbackFn = (...url: unknown[]) => string | undefined
-
-export interface RunParams {
-  payload: RunCallbackFn | string | undefined
-  parameters: unknown[]
-}
