@@ -16,6 +16,10 @@ import {
   FetchListApiResponse,
   FetchSingleApiResponse,
 
+  ExternalActions,
+  ExternalGetters,
+  ExternalState,
+
   // ACTIONS PAYLOAD
   FetchListActionPayload,
   FetchFiltersActionPayload,
@@ -53,15 +57,18 @@ export type ActionsPayload = (
 )
 
 export interface ModuleOptions {
+  actions?: ExternalActions
+  createURL?: string
   destroyURL?: RunCallbackFn<DestroyURL>
   fetchFieldOptionsURL?: string
   fetchFiltersURL?: string
   fetchListURL?: string
   fetchSingleURL?: RunCallbackFn<FetchSingleURL>
-  idKey?: string,
-  updateURL?: RunCallbackFn<UpdateURL>
+  getters?: ExternalGetters
+  idKey?: string
   replaceURL?: RunCallbackFn<ReplaceURL>
-  createURL?: string
+  state?: ExternalState
+  updateURL?: RunCallbackFn<UpdateURL>
 }
 
 export type PayloadActionType = (

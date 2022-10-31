@@ -1,12 +1,9 @@
 import {
   ActionsFnParams,
   AvailableAdapters,
-  ExternalGetters,
   ModuleOptions,
-  ExternalState,
   StoreModuleClass,
-  StoreModuleOptions,
-  ExternalActions
+  StoreModuleOptions
 } from 'types'
 
 import {
@@ -23,10 +20,6 @@ import {
 } from './module'
 
 export default class StoreModule {
-  private actions: ExternalActions
-  private getters: ExternalGetters
-  private state: ExternalState
-
   private isPinia: boolean
   private isVuex: boolean
 
@@ -41,10 +34,6 @@ export default class StoreModule {
       throw new Error('Wrong adapter, available adapters are: "pinia"(default) or "vuex"')
     }
 
-    this.actions = this.options.actions || {}
-    this.getters = this.options.getters || {}
-    this.state = this.options.state || {}
-
     this.isPinia = (this.options.adapter || 'pinia') === 'pinia'
     this.isVuex = !this.isPinia
   }
@@ -53,6 +42,10 @@ export default class StoreModule {
     options = options || {}
 
     const idKey = options?.idKey || this.options.idKey || 'uuid'
+
+    const actions = options.actions || {}
+    const gettersData = options.getters || {}
+    const stateData = options.state || {}
 
     const actionsPayload: ActionsFnParams = {
       apiService: this.options.apiService,
@@ -69,14 +62,14 @@ export default class StoreModule {
         return {
           ...state(),
 
-          ...this.state
+          ...stateData
         }
       },
 
       getters: {
         ...getters(idKey),
 
-        ...this.getters
+        ...gettersData
       },
 
       actions: {
@@ -89,7 +82,7 @@ export default class StoreModule {
         replace: replace(actionsPayload),
         update: update(actionsPayload),
 
-        ...this.actions
+        ...actions
       }
     }
 
