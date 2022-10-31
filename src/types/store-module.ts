@@ -22,13 +22,10 @@ export type ExternalState = Record<string, unknown>
 export type ExternalGetters = Record<keyof (State | ExternalState), unknown> | {}
 
 export interface StoreModuleOptions {
-  actions?: ExternalActions
   adapter: StoreModuleAdapter
   apiService: ApiService
-  getters?: ExternalGetters
   idKey?: string
   perPage?: number
-  state?: ExternalState
 }
 
 export interface StoreModuleClass {

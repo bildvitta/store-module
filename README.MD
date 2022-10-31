@@ -103,7 +103,7 @@ export default storeModule
 ```js
 import storeModule from 'caminho-do-arquivo-store-module.js'
 
-export default storeModule.getStoreModule('users')
+export default storeModule.createStoreModule('users')
 ```
 
 4. Após, isto vamos no arquivo onde foi inicializado o `Vuex`, vamos importar o `users.js` e adicionar ele dentro de `modules`:
@@ -143,17 +143,11 @@ new StoreModule(options: StoreModuleOptions).createStoreModule(
 
 ```ts
 export interface StoreModuleOptions {
-  // actions do vuex ou pinia adicionais
-  actions: ExternalActions
-
   // adapter da store: pinia | vuex
   adapter: StoreModuleAdapter
 
   // instancia do axios
   apiService: ApiService
-
-  // getters do vuex ou pinia adicionais
-  getters: ExternalGetters
 
   // opção para alterar chave identificadora para ser usado como chave primaria
   // configuração global, caso não seja configurado o padrão é "uuid"
@@ -162,12 +156,12 @@ export interface StoreModuleOptions {
   // itens por listagem definidos na action "fetchList"
   // configuração global, caso não seja configurado o padrão é 12
   perPage: number
-
-  // state do vuex ou pinia adicionais 
-  state: ExternalState
 }
 
 export interface ModuleOptions {
+    // actions do vuex ou pinia adicionais
+  actions: ExternalActions
+
   // callback para alterar a url da action "destroy" que tem como parâmetro "{ id }"
   destroyURL: RunCallbackFn<DestroyURL>
 
@@ -183,6 +177,9 @@ export interface ModuleOptions {
   // callback para alterar a url da action "fetchSingle" que tem como parâmetro "{ form, id }"
   fetchSingleURL: RunCallbackFn<FetchSingleURL>
 
+  // getters do vuex ou pinia adicionais
+  getters: ExternalGetters
+
   // opção para alterar chave identificadora para ser usado como chave primaria
   // sobrescreve a configuração global, caso não seja configurado o padrão é
   // configurado global StoreModuleOptions.idKey ou "uuid"
@@ -196,6 +193,9 @@ export interface ModuleOptions {
 
   // opção para alterar a url da action "create"
   createURL: string
+
+  // state do vuex ou pinia adicionais 
+  state: ExternalState
 }
 
 export interface StoreModule {
