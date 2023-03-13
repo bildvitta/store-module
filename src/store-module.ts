@@ -89,3 +89,23 @@ export default class StoreModule {
     return store
   }
 }
+
+import axios from 'axios'
+// import users from '../examples/modules/users2.json'
+import users from '../examples/modules/users.yml'
+console.log(users)
+
+const storeModule = new StoreModule({
+  adapter: 'vuex',
+  apiService: axios
+})
+
+const store = storeModule.createStoreModule('users', {
+  module: {
+    fields: {
+
+    }
+  }
+})
+
+console.log(store)

@@ -56,6 +56,10 @@ export type ActionsPayload = (
   CreateActionPayload
 )
 
+export interface Module {
+  fields: Record<string, unknown>
+}
+
 export interface ModuleOptions {
   actions?: ExternalActions
   createURL?: string
@@ -69,6 +73,7 @@ export interface ModuleOptions {
   replaceURL?: RunCallbackFn<ReplaceURL>
   state?: ExternalState
   updateURL?: RunCallbackFn<UpdateURL>
+  module: Module
 }
 
 export type PayloadActionType = (

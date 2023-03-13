@@ -1,0 +1,31 @@
+fields:
+  name:
+    name: name
+    type: text
+    label: Nome
+    useDynamicOptions: true
+    props:
+      disabled: true
+    validators:
+      required: true
+      maxLength: 20
+
+  email:
+    name: email
+    label: E-email
+    props:
+      disabled: false
+
+  country:
+    name: select
+    label: Pais
+
+filters:
+  # Aqui escolho quais campos dos "fields" estarão nos fields do filters
+  fieldsList: ['name', 'email']
+
+  # Aqui posso sobrescrever alguma propriedade do field que adicionei no fieldsList ou então criar um field que não existe em "filters" e vai existir somente em "filters"
+  fields:
+    email:
+      label: Label modificado
+

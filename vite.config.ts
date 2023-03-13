@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
+import ViteYaml from '@modyfi/vite-plugin-yaml'
 
 const path = require('path')
 
@@ -20,6 +21,7 @@ export default defineConfig({
     }
   },
   plugins: [
-    dts()
+    dts(),
+    ViteYaml()
   ]
 })
