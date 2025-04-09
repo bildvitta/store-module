@@ -15,7 +15,7 @@ export default (configParams: ActionsFnParams) => {
     this: NamespacedState,
     ...args: ActionsFnHandlerTuple<FetchListActionPayload>
   ): Promise<AxiosResponse<FetchListApiResponse>> {
-    const { apiService, isPinia, options, resource, perPage } = configParams
+    const { apiService, isPinia, options, resource } = configParams
 
     const {
       filters,
@@ -27,7 +27,7 @@ export default (configParams: ActionsFnParams) => {
       url
     } = getActionPayload(isPinia, ...args) as FetchListActionPayload
 
-    const defaultPerPage = perPage || 12
+    const defaultPerPage = options.perPage || 36
 
     const params = {
       ...filters,
