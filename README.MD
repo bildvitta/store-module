@@ -152,10 +152,6 @@ export interface StoreModuleOptions {
   // opção para alterar chave identificadora para ser usado como chave primaria
   // configuração global, caso não seja configurado o padrão é "uuid"
   idKey: string
-
-  // itens por listagem definidos na action "fetchList"
-  // configuração global, caso não seja configurado o padrão é 12
-  perPage: number
 }
 
 export interface ModuleOptions {
@@ -173,6 +169,10 @@ export interface ModuleOptions {
 
   // opção para alterar a url da action "fetchList"
   fetchListURL: string
+
+  // itens por listagem definidos na action "fetchList"
+  // configuração global, caso não seja configurado o padrão é 36
+  perPage: number
 
   // callback para alterar a url da action "fetchSingle" que tem como parâmetro "{ form, id }"
   fetchSingleURL: RunCallbackFn<FetchSingleURL>

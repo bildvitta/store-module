@@ -12,7 +12,7 @@ Podemos ter pequenas breaking changes sem alterar o `major` version, apesar de s
 - Modificado `perPage` para 36 itens por página.
 
 ### Corrigido
-- Corrigido possibilidade de passar `perPage` através da store.
+- Corrigido possibilidade de passar `perPage` através do `createStoreModule`.
 
 ## 1.0.0 - 03-02-2023
 Versão estável lançada!
