@@ -41,7 +41,6 @@ export interface ActionsFnParams {
   idKey: string
   isPinia: boolean
   options: ModuleOptions
-  perPage?: number
   resource: string
 }
 
@@ -69,6 +68,7 @@ export interface ModuleOptions {
   replaceURL?: RunCallbackFn<ReplaceURL>
   state?: ExternalState
   updateURL?: RunCallbackFn<UpdateURL>
+  perPage?: number
 }
 
 export type PayloadActionType = (
