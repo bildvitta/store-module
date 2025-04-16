@@ -149,13 +149,15 @@ export interface StoreModuleOptions {
   // instancia do axios
   apiService: ApiService
 
-  // opção para alterar chave identificadora para ser usado como chave primaria
-  // configuração global, caso não seja configurado o padrão é "uuid"
+  /**
+   * opção para alterar chave identificadora para ser usado como chave primaria
+   * configuração global, caso não seja configurado o padrão é "uuid"
+   */
   idKey: string
 }
 
 export interface ModuleOptions {
-    // actions do vuex ou pinia adicionais
+  // actions do vuex ou pinia adicionais
   actions: ExternalActions
 
   // callback para alterar a url da action "destroy" que tem como parâmetro "{ id }"
@@ -170,8 +172,10 @@ export interface ModuleOptions {
   // opção para alterar a url da action "fetchList"
   fetchListURL: string
 
-  // itens por listagem definidos na action "fetchList"
-  // configuração global, caso não seja configurado o padrão é 36
+  /**
+   * itens por listagem definidos na action "fetchList"
+   * configuração global, caso não seja configurado o padrão é 36
+   */
   perPage: number
 
   // callback para alterar a url da action "fetchSingle" que tem como parâmetro "{ form, id }"
@@ -180,9 +184,11 @@ export interface ModuleOptions {
   // getters do vuex ou pinia adicionais
   getters: ExternalGetters
 
-  // opção para alterar chave identificadora para ser usado como chave primaria
-  // sobrescreve a configuração global, caso não seja configurado o padrão é
-  // configurado global StoreModuleOptions.idKey ou "uuid"
+  /**
+   * opção para alterar chave identificadora para ser usado como chave primaria
+   * sobrescreve a configuração global, caso não seja configurado o padrão é
+   * configurado global StoreModuleOptions.idKey ou "uuid"
+   */
   idKey: string
 
   // callback para alterar a url da action "update" que tem como parâmetro "{ id }"
